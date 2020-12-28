@@ -2,22 +2,34 @@
 	$this->load->view('header'); 
 	$this->load->helper('url');
 	$base = base_url() . index_page();
-	$img_base = base_url()."assets/images/";
+	$img_base = base_url()."/assets/images/products/";
 ?>
 
-<?php echo form_open_multipart('AuthorController/handleInsert');
+<?php echo form_open_multipart('AdminController/handleInsert');
 
-	echo 'Enter Author ID :';
-	echo form_input('authorID', $authorID);
+	echo 'Enter Product Code :';
+	echo form_input('prodCode', $prodCode);
 
-	echo '</br></br>Enter First Name :';
-	echo form_input('firstName', $firstName);
+	echo '</br></br>Enter Description :';
+	echo form_input('prodDescription', $prodDescription);
 
-	echo '</br></br>Enter Last Name :';
-	echo form_input('lastName', $lastName);
+	echo '</br></br>Enter Category :';
+	echo form_input('prodCategory', $prodCategory);
 
-	echo '</br></br>Enter Year Born :';
-	echo form_input('yearBorn', $yearBorn);
+	echo '</br></br>Enter Artist :';
+	echo form_input('prodArtist', $prodArtist);
+	
+	echo '</br></br>Enter Product in stock :';
+	echo form_input('prodQtyInStock', $prodQtyInStock);
+	
+	echo '</br></br>Enter Cost :';
+	echo form_input('prodBuyCost', $prodBuyCost);
+	
+	echo '</br></br>Enter Sale Price :';
+	echo form_input('prodSalePrice', $prodSalePrice);
+	
+	echo '</br></br>Enter Discount :';
+	echo form_input('priceAlreadyDiscounted', $priceAlreadyDiscounted);
 	
 	echo '</br></br>Select File for Upload :'; 
 	echo form_upload('userfile');

@@ -48,21 +48,29 @@ class AdminController extends CI_Controller {
 			$data['message']="There was an error deleting the product with an ID of $productcode";
 		$this->load->view('displayMessageView',$data);
 	}
-    public function updateproduct($productcode)
+    public function updateproduct($prodCode)
     {	$pathToFile = $this->uploadAndResizeFile();
 		$this->createThumbnail($pathToFile);
 
 		//set validation rules
-		$this->form_validation->set_rules('productcode', 'product ID', 'required');
-		$this->form_validation->set_rules('firstName', 'First Name', 'required');
-		$this->form_validation->set_rules('lastName', 'Last Name', 'required');	
-		$this->form_validation->set_rules('yearBorn', 'Year Born', 'required');
+	        $this->form_validation->set_rules('prodCode', 'Product Code', 'required');
+			$this->form_validation->set_rules('prodDescription', 'Description', 'required');
+			$this->form_validation->set_rules('prodCategory', 'Category', 'required');	
+			$this->form_validation->set_rules('prodArtist', 'Artist', 'required');
+			$this->form_validation->set_rules('prodQtyInStock', 'Product in stock', 'required');
+			$this->form_validation->set_rules('prodBuyCost', 'Cost', 'required');
+			$this->form_validation->set_rules('prodSalePrice', 'Sale Price', 'required');
+			$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 	
 		//get values from post
-		$productcode = $this->input->post('productcode');
-		$anproduct['firstName'] = $this->input->post('firstName');
-		$anproduct['lastName'] = $this->input->post('lastName');
-		$anproduct['yearBorn'] = $this->input->post('yearBorn');
+		    $prodCode = $this->input->post('prodCode');
+			$anproduct['prodDescription'] = $this->input->post('prodDescription');
+			$anproduct['prodCategory'] = $this->input->post('prodCategory');
+			$anproduct['prodArtist'] = $this->input->post('prodArtist');
+			$anproduct['prodQtyInStock'] = $this->input->post('prodQtyInStock');
+			$anproduct['prodBuyCost'] = $this->input->post('prodBuyCost');
+			$anproduct['prodSalePrice'] = $this->input->post('prodSalePrice');
+			$anproduct['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
 		$anproduct['image'] = $_FILES['userfile']['name'];
 
 		//check if the form has passed validation
@@ -138,16 +146,24 @@ class AdminController extends CI_Controller {
 			$this->createThumbnail($pathToFile);
 			
 			//set validation rules
-			$this->form_validation->set_rules('productcode', 'product ID', 'required');
-			$this->form_validation->set_rules('firstName', 'First Name', 'required');
-			$this->form_validation->set_rules('lastName', 'Last Name', 'required');	
-			$this->form_validation->set_rules('yearBorn', 'Year Born', 'required');
+			$this->form_validation->set_rules('prodCode', 'Product Code', 'required');
+			$this->form_validation->set_rules('prodDescription', 'Description', 'required');
+			$this->form_validation->set_rules('prodCategory', 'Category', 'required');	
+			$this->form_validation->set_rules('prodArtist', 'Artist', 'required');
+			$this->form_validation->set_rules('prodQtyInStock', 'Product in stock', 'required');
+			$this->form_validation->set_rules('prodBuyCost', 'Cost', 'required');
+			$this->form_validation->set_rules('prodSalePrice', 'Sale Price', 'required');
+			$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 			
 			//get values from post
-			$anproduct['productcode'] = $this->input->post('productcode');
-			$anproduct['firstName'] = $this->input->post('firstName');
-			$anproduct['lastName'] = $this->input->post('lastName');
-			$anproduct['yearBorn'] = $this->input->post('yearBorn');
+			$anproduct['prodCode'] = $this->input->post('prodCode');
+			$anproduct['prodDescription'] = $this->input->post('prodDescription');
+			$anproduct['prodCategory'] = $this->input->post('prodCategory');
+			$anproduct['prodArtist'] = $this->input->post('prodArtist');
+			$anproduct['prodQtyInStock'] = $this->input->post('prodQtyInStock');
+			$anproduct['prodBuyCost'] = $this->input->post('prodBuyCost');
+			$anproduct['prodSalePrice'] = $this->input->post('prodSalePrice');
+			$anproduct['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
 			$anproduct['image'] = $_FILES['userfile']['name'];
 			
 			//check if the form has passed validation
@@ -174,10 +190,14 @@ class AdminController extends CI_Controller {
 
 		//the user has not submitted the form
 		//initialize the form fields
-		$anproduct['productcode'] = "";
-		$anproduct['firstName'] = "";
-		$anproduct['lastName'] = "";
-		$anproduct['yearBorn'] = "";
+		$anproduct['prodCode'] = "";
+		$anproduct['prodDescription'] = "";
+		$anproduct['prodCategory'] = "";
+		$anproduct['prodArtist'] = "";
+		$anproduct['prodQtyInStock'] = "";
+		$anproduct['prodBuyCost'] = "";
+		$anproduct['prodSalePrice'] = "";
+		$anproduct['priceAlreadyDiscounted'] = "";
 
 		//load the form
 		$this->load->view('insertproductView', $anproduct);

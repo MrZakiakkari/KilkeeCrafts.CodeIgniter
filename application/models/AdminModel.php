@@ -3,16 +3,13 @@
 	class AdminModel extends CI_Model {
 
 		function __construct() {
-        	parent::__construct();
+        	//parent::__construct();
 			$this->load->database();
     	}
 	
 		function insertAdminModel($product) {
 			$this->db->insert('product',$product);
-			if ($this->db->affected_rows() ==1) 
-				return true;
-			else 
-				return false;
+			return  ($this->db->affected_rows() ==1);
 		}
 		
 		function record_count(){
