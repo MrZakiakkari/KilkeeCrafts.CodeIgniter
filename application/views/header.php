@@ -18,11 +18,11 @@
 <body>
 <header>
 	<img class="center-image" src="<?php echo $img_base . "site/Logo.png"?>" />
-    <?= anchor('AdminController/index', 'Home', 'title="Home"'); ?>
+    <?= anchor('ProductController/index', 'Home', 'title="Home"'); ?>
 	&nbsp;&nbsp;&nbsp;
-	<?= anchor('AdminController/handleInsert', 'Insert', 'title="Insert"'); ?>
+	<?= anchor('ProductController/handleInsert', 'Insert', 'title="Insert"'); ?>
     &nbsp;&nbsp;&nbsp;
-	<?= anchor('AdminController/listproducts/', 'List', 'title="List"'); ?>
+	<?= anchor('ProductController/listproducts/', 'List', 'title="List"'); ?>
 	&nbsp;&nbsp;&nbsp;
 	<?= anchor('PublisherController/listPublishers', 'List Publishers', 'title="List Publishers"'); ?>
 	<?= anchor('CustomerController/handleInsert', 'Insert Customer', 'title="Insert Customer"'); ?>

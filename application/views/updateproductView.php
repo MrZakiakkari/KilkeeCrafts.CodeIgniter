@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php
 	foreach ($edit_data as $row) {
-		echo form_open_multipart('AdminController/updateProduct/'.$row->prodCode);
+		echo form_open_multipart('ProductController/updateProduct/'.$row->productCode);
 		echo '</br></br>';
 		
 		echo 'Product Code : ';

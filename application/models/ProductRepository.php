@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class AdminModel extends CI_Model {
+	class ProductRepository extends CI_Model {
 
 		function __construct() {
         	//parent::__construct();
 			$this->load->database();
     	}
 	
-		function insertAdminModel($product) {
+		function insertProductRepository($product) {
 			$this->db->insert('product',$product);
 			return  ($this->db->affected_rows() ==1);
 		}
@@ -30,12 +30,12 @@
 			return $query->result();
 		}
 		
-		function deleteAdminModel($id) {
+		function deleteProductRepository($id) {
 			$this->db->where('prodCode', $id);
 			return $this->db->delete('product');
 		}
 		
-		function updateAdminModel($product,$id) {
+		function updateProductRepository($product,$id) {
 			$this->db->where('prodCode', $id);
 			return $this->db->update('product',$product);
 		}

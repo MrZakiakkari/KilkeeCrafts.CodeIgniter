@@ -1,9 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class AdminController extends CI_Controller {
+class ProductController extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('AdminModel');
+		$this->load->model('ProductRepository');
 		$this->load->helper('form');
 		$this->load->helper('html');
 		$this->load->helper('url');
@@ -17,38 +17,38 @@ class AdminController extends CI_Controller {
 	}
 		//hello
 	/*public function listproducts() 
-	{	$data['product_info']=$this->AdminModel->get_all_products();
+	{	$data['product_info']=$this->ProductRepository->get_all_products();
 		$this->load->view('productListView',$data);
 	}*/
 	public function listproducts() 
 	{	//config options for pagination
-		$config['base_url']=site_url('AdminController/listproducts/');
-		$config['total_rows']=$this->AdminModel->record_count();
+		$config['base_url']=site_url('ProductController/listproducts/');
+		$config['total_rows']=$this->ProductRepository->record_count();
 		$config['per_page']=2;
 		$this->pagination->initialize($config);
-		$data['product_info']=$this->AdminModel->get_all_products(2, $this->uri->segment(3));
+		$data['product_info']=$this->ProductRepository->get_all_products(2, $this->uri->segment(3));
 		$this->load->view('productListView',$data);
 	}
 	
-	public function editproduct($productcode)
-	{	$data['edit_data']=$this->AdminModel->drilldown($productcode);
+	public function editproduct($productCode)
+	{	$data['edit_data']=$this->ProductRepository->drilldown($productcode);
 		$this->load->view('updateproductView',$data);
 	}
 
-	public function viewproduct($productcode)
-	{	$data['view_data']=$this->AdminModel->drilldown($productcode);
+	public function viewproduct($productCode)
+	{	$data['view_data']=$this->ProductRepository->drilldown($productcode);
 		$this->load->view('productView',$data);
 	}
 
-	public function deleteproduct($productcode)
-	{	$deletedRows = $this->AdminModel->deleteAdminModel($productcode);
+	public function deleteproduct($productCode)
+	{	$deletedRows = $this->ProductRepository->deleteProductRepository($productCode);
 		if ($deletedRows >0)
 			$data['message']="$deletedRows product has been deleted";
 		else
-			$data['message']="There was an error deleting the product with an ID of $productcode";
+			$data['message']="There was an error deleting the product with an ID of $productCode";
 		$this->load->view('displayMessageView',$data);
 	}
-    public function updateproduct($prodCode)
+    public function updateproduct($productCode)
     {	$pathToFile = $this->uploadAndResizeFile();
 		$this->createThumbnail($pathToFile);
 
@@ -64,26 +64,26 @@ class AdminController extends CI_Controller {
 	
 		//get values from post
 		    $prodCode = $this->input->post('prodCode');
-			$anproduct['prodDescription'] = $this->input->post('prodDescription');
-			$anproduct['prodCategory'] = $this->input->post('prodCategory');
-			$anproduct['prodArtist'] = $this->input->post('prodArtist');
-			$anproduct['prodQtyInStock'] = $this->input->post('prodQtyInStock');
-			$anproduct['prodBuyCost'] = $this->input->post('prodBuyCost');
-			$anproduct['prodSalePrice'] = $this->input->post('prodSalePrice');
-			$anproduct['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
-		$anproduct['image'] = $_FILES['userfile']['name'];
+			$product['prodDescription'] = $this->input->post('prodDescription');
+			$product['prodCategory'] = $this->input->post('prodCategory');
+			$product['prodArtist'] = $this->input->post('prodArtist');
+			$product['prodQtyInStock'] = $this->input->post('prodQtyInStock');
+			$product['prodBuyCost'] = $this->input->post('prodBuyCost');
+			$product['prodSalePrice'] = $this->input->post('prodSalePrice');
+			$product['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
+		$product['image'] = $_FILES['userfile']['name'];
 
 		//check if the form has passed validation
 		if (!$this->form_validation->run()){
 			//validation has failed, load the form again
-			$this->load->view('updateproductView', $anproduct);
+			$this->load->view('updateproductView', $product);
 			return;
 		}
 
 		
 		//check if update is successful
-		if ($this->AdminModel->updateAdminModel($anproduct, $productcode)) {
-			redirect('AdminController/listproducts');
+		if ($this->ProductRepository->updateProductRepository($product, $productCode)) {
+			redirect('ProductController/listproducts');
 		}
 		else {
 			$data['message']="Uh oh ... problem on update";
@@ -156,27 +156,27 @@ class AdminController extends CI_Controller {
 			$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 			
 			//get values from post
-			$anproduct['prodCode'] = $this->input->post('prodCode');
-			$anproduct['prodDescription'] = $this->input->post('prodDescription');
-			$anproduct['prodCategory'] = $this->input->post('prodCategory');
-			$anproduct['prodArtist'] = $this->input->post('prodArtist');
-			$anproduct['prodQtyInStock'] = $this->input->post('prodQtyInStock');
-			$anproduct['prodBuyCost'] = $this->input->post('prodBuyCost');
-			$anproduct['prodSalePrice'] = $this->input->post('prodSalePrice');
-			$anproduct['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
-			$anproduct['image'] = $_FILES['userfile']['name'];
+			$product['prodCode'] = $this->input->post('prodCode');
+			$product['prodDescription'] = $this->input->post('prodDescription');
+			$product['prodCategory'] = $this->input->post('prodCategory');
+			$product['prodArtist'] = $this->input->post('prodArtist');
+			$product['prodQtyInStock'] = $this->input->post('prodQtyInStock');
+			$product['prodBuyCost'] = $this->input->post('prodBuyCost');
+			$product['prodSalePrice'] = $this->input->post('prodSalePrice');
+			$product['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
+			$product['image'] = $_FILES['userfile']['name'];
 			
 			//check if the form has passed validation
 			if (!$this->form_validation->run()){
 				//validation has failed, load the form again – keeping all the data in place
 				//and pass the appropriate validation error messages via the 
 				//form_validation library
-				$this->load->view('insertproductView', $anproduct);
+				$this->load->view('insertproductView', $product);
 				return;
 			}
 
 			//check if insert is successful
-			if ($this->AdminModel->insertAdminModel($anproduct)) {
+			if ($this->ProductRepository->insertProductRepository($product)) {
 				$data['message']="The insert has been successful";
 			}
 			else {
@@ -190,16 +190,16 @@ class AdminController extends CI_Controller {
 
 		//the user has not submitted the form
 		//initialize the form fields
-		$anproduct['prodCode'] = "";
-		$anproduct['prodDescription'] = "";
-		$anproduct['prodCategory'] = "";
-		$anproduct['prodArtist'] = "";
-		$anproduct['prodQtyInStock'] = "";
-		$anproduct['prodBuyCost'] = "";
-		$anproduct['prodSalePrice'] = "";
-		$anproduct['priceAlreadyDiscounted'] = "";
+		$product['prodCode'] = "";
+		$product['prodDescription'] = "";
+		$product['prodCategory'] = "";
+		$product['prodArtist'] = "";
+		$product['prodQtyInStock'] = "";
+		$product['prodBuyCost'] = "";
+		$product['prodSalePrice'] = "";
+		$product['priceAlreadyDiscounted'] = "";
 
 		//load the form
-		$this->load->view('insertproductView', $anproduct);
+		$this->load->view('insertproductView', $product);
 	}
 }
