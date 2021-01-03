@@ -40,12 +40,22 @@
 			return $this->db->update('product',$product);
 		}
 		
-		function drilldown($product) {
+		/*WRongly named*/
+		function drilldown($prodCode) {
 			$this->db->select("prodCode,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
 			$this->db->from('product');
-			$this->db->where('prodCode',$product);
+			$this->db->where('prodCode',$prodCode);
 			$query = $this->db->get();
 			return $query->result();
 		}
+		function getProductByCode($code) {
+
+			$this->db->select("prodCode,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
+			$this->db->from('product');
+			$this->db->where('prodCode',$code);
+
+			$query = $this->db->get();
+			return $query->result()[0];
+
+		}
 }
-?>

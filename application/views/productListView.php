@@ -33,9 +33,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td><?php echo $row->prodSalePrice;?></td>
 			<td><?php echo $row->priceAlreadyDiscounted;?></td>
 			<td><img src="<?php echo $img_base.'thumbs/'.$row->prodPhoto;?>"></td>
-			<td><?php echo anchor('ProductController/viewAdmin/'.$row->prodCode,'View');?></td>
-			<td><?php echo anchor('ProductController/editAdmin/'.$row->prodCode,'Update');?></td>
-			<td><?php echo anchor('ProductController/deleteAdmin/'.$row->prodCode,
+			<td><?php echo anchor('ProductController/viewproduct/'.$row->prodCode,'View');?></td>
+			<td><?php echo anchor('ProductController/editproduct/'.$row->prodCode,'Update');?></td>
+			<td><?php echo anchor('ProductController/deleteproduct/'.$row->prodCode,
 				'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  
