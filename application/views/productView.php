@@ -11,7 +11,7 @@ echo form_open();
 echo '</br></br>';
 
 echo 'Product Code : ';
-echo form_input('prodCode', $product->prodCode, 'readonly');
+echo form_input('Id', $product->Id, 'readonly');
 
 echo '</br></br>Description : ';
 echo form_input('prodDescription', $product->prodDescription, 'readonly');

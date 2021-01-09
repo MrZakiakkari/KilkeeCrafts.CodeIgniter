@@ -8,7 +8,7 @@
 <?php echo form_open_multipart('ProductController/handleInsert');
 
 	echo 'Enter Product Code :';
-	echo form_input('prodCode', $prodCode);
+	echo form_input('Id', $Id);
 
 	echo '</br></br>Enter Description :';
 	echo form_input('prodDescription', $prodDescription);

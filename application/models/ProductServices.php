@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class ProductRepository extends CI_Model {
+class ProductServices extends CI_Model {
 
 	protected $table = "Product";
 
@@ -17,8 +17,8 @@ class ProductRepository extends CI_Model {
 		return $this->db->affected_rows() == 1;
 	}
 
-	function deleteProductById($productId) {
-		$this->db->where('Id', $productId);
+	function deleteProductById($ProductId) {
+		$this->db->where('Id', $ProductId);
 		return $this->db->delete($this->table);
 	}
 
@@ -32,7 +32,7 @@ class ProductRepository extends CI_Model {
 	}
 
 	/* function get_all_product() {
-	  $this->db->select("prodCode,FirstName,LastName,YearBorn,Image");
+	  $this->db->select("Id,FirstName,LastName,YearBorn,Image");
 	  $this->db->from('product');
 	  $query = $this->db->get();
 	  return $query->result();
@@ -40,7 +40,7 @@ class ProductRepository extends CI_Model {
 
 	function get_all_product($limit, $offset) {
 		$this->db->limit($limit, $offset);
-		$this->db->select("prodCode,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,priceAlreadyDiscounted,prodPhoto");
+		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,priceAlreadyDiscounted,prodPhoto");
 		$this->db->from('product');
 		$query = $this->db->get();
 		return $query->result();
@@ -50,19 +50,19 @@ class ProductRepository extends CI_Model {
 
 	/* WRongly named */
 
-	function drilldown($prodCode) {
-		$this->db->select("prodCode,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
+	function drilldown($Id) {
+		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
 		$this->db->from('product');
-		$this->db->where('prodCode', $prodCode);
+		$this->db->where('Id', $Id);
 		$query = $this->db->get();
 		return $query->result();
 	}
 
 	function getProductByCode($code) {
 
-		$this->db->select("prodCode,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
+		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
 		$this->db->from('product');
-		$this->db->where('prodCode', $code);
+		$this->db->where('Id', $code);
 
 		$query = $this->db->get();
 		return $query->result()[0];

@@ -7,7 +7,7 @@ class ProductController extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('ProductRepository');
+		$this->load->model('ProductServices');
 		$this->load->helper('form');
 		$this->load->helper('html');
 		$this->load->helper('url');
@@ -22,44 +22,44 @@ class ProductController extends CI_Controller {
 
 	//hello
 	/* public function listproducts() 
-	  {	$data['product_info']=$this->ProductRepository->get_all_products();
+	  {	$data['product_info']=$this->ProductServices->get_all_products();
 	  $this->load->view('productListView',$data);
 	  } */
 	public function listproducts() { //config options for pagination
 		$paginationConfig = array(
 			'base_url' => site_url('ProductController/listproducts/'),
-			'total_rows' => $this->ProductRepository->record_count(),
+			'total_rows' => $this->ProductServices->record_count(),
 			'per_page' => 2);
 		$this->pagination->initialize($paginationConfig);
-		$data['product_info'] = $this->ProductRepository->get_all_product(2, $this->uri->segment(3));
+		$data['product_info'] = $this->ProductServices->get_all_product(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
 
-	public function editproduct($productCode) {
-		$data['edit_data'] = $this->ProductRepository->drilldown($productCode);
+	public function editproduct($ProductId) {
+		$data['edit_data'] = $this->ProductServices->drilldown($ProductId);
 		$this->load->view('updateproductView', $data);
 	}
 
-	public function viewproduct($productCode) {
-		$data = array('product' => $this->ProductRepository->getProductByCode($productCode));
+	public function viewproduct($ProductId) {
+		$data = array('product' => $this->ProductServices->getProductByCode($ProductId));
 		$this->load->view('productView', $data);
 	}
 
-	public function deleteproduct($productCode) {
-		$deletedRows = $this->ProductRepository->deleteProductRepository($productCode);
+	public function deleteproduct($ProductId) {
+		$deletedRows = $this->ProductServices->deleteProductById($ProductId);
 		if ($deletedRows > 0)
 			$data['message'] = "$deletedRows product has been deleted";
 		else
-			$data['message'] = "There was an error deleting the product with an ID of $productCode";
+			$data['message'] = "There was an error deleting the product with an ID of $ProductId";
 		$this->load->view('displayMessageView', $data);
 	}
 
-	public function updateproduct($productCode) {
+	public function updateproduct($ProductId) {
 		$pathToFile = $this->uploadAndResizeFile();
 		$this->createThumbnail($pathToFile);
 
 		//set validation rules
-		$this->form_validation->set_rules('prodCode', 'Product Code', 'required');
+		$this->form_validation->set_rules('Id', 'Product Code', 'required');
 		$this->form_validation->set_rules('prodDescription', 'Description', 'required');
 		$this->form_validation->set_rules('prodCategory', 'Category', 'required');
 		$this->form_validation->set_rules('prodArtist', 'Artist', 'required');
@@ -69,7 +69,7 @@ class ProductController extends CI_Controller {
 		$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 
 		//get values from post
-		$prodCode = $this->input->post('prodCode');
+		$Id = $this->input->post('Id');
 		$product['prodDescription'] = $this->input->post('prodDescription');
 		$product['prodCategory'] = $this->input->post('prodCategory');
 		$product['prodArtist'] = $this->input->post('prodArtist');
@@ -88,7 +88,7 @@ class ProductController extends CI_Controller {
 
 
 		//check if update is successful
-		if ($this->ProductRepository->updateProductRepository($product, $productCode)) {
+		if ($this->ProductServices->updateProduct($product)) {
 			redirect('ProductController/listproducts');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
@@ -150,7 +150,7 @@ class ProductController extends CI_Controller {
 			$this->createThumbnail($pathToFile);
 
 			//set validation rules
-			$this->form_validation->set_rules('prodCode', 'Product Code', 'required');
+			$this->form_validation->set_rules('Id', 'Product Code', 'required');
 			$this->form_validation->set_rules('prodDescription', 'Description', 'required');
 			$this->form_validation->set_rules('prodCategory', 'Category', 'required');
 			$this->form_validation->set_rules('prodArtist', 'Artist', 'required');
@@ -160,7 +160,7 @@ class ProductController extends CI_Controller {
 			$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 
 			//get values from post
-			$product['prodCode'] = $this->input->post('prodCode');
+			$product['Id'] = $this->input->post('Id');
 			$product['prodDescription'] = $this->input->post('prodDescription');
 			$product['prodCategory'] = $this->input->post('prodCategory');
 			$product['prodArtist'] = $this->input->post('prodArtist');
@@ -180,7 +180,7 @@ class ProductController extends CI_Controller {
 			}
 
 			//check if insert is successful
-			if ($this->ProductRepository->insertProductRepository($product)) {
+			if ($this->ProductServices->addProduct($product)) {
 				$data['message'] = "The insert has been successful";
 			} else {
 				$data['message'] = "Uh oh ... problem on insert";
@@ -193,7 +193,7 @@ class ProductController extends CI_Controller {
 
 		//the user has not submitted the form
 		//initialize the form fields
-		$product['prodCode'] = "";
+		$product['Id'] = "";
 		$product['prodDescription'] = "";
 		$product['prodCategory'] = "";
 		$product['prodArtist'] = "";
