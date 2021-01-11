@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class ProductController extends CI_Controller {
+class ProductController extends CI_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->model('ProductServices');
 		$this->load->helper('form');
@@ -15,7 +17,8 @@ class ProductController extends CI_Controller {
 		$this->load->library('pagination');
 	}
 
-	public function index() {
+	public function index()
+	{
 		//load the index page
 		$this->load->view('index');
 	}
@@ -25,36 +28,42 @@ class ProductController extends CI_Controller {
 	  {	$data['product_info']=$this->ProductServices->get_all_products();
 	  $this->load->view('productListView',$data);
 	  } */
-	public function listproducts() { //config options for pagination
+	public function listproducts()
+	{ //config options for pagination
 		$paginationConfig = array(
 			'base_url' => site_url('ProductController/listproducts/'),
 			'total_rows' => $this->ProductServices->record_count(),
-			'per_page' => 2);
+			'per_page' => 2
+		);
 		$this->pagination->initialize($paginationConfig);
 		$data['product_info'] = $this->ProductServices->get_all_product(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
 
-	public function editproduct($ProductId) {
-		$data['edit_data'] = $this->ProductServices->drilldown($ProductId);
+	public function editproduct($productId)
+	{
+		$data = array("product" => $this->ProductServices->getProductByCode($productId));
 		$this->load->view('updateproductView', $data);
 	}
 
-	public function viewproduct($ProductId) {
-		$data = array('product' => $this->ProductServices->getProductByCode($ProductId));
+	public function viewproduct($productId)
+	{
+		$data = array('product' => $this->ProductServices->getProductByCode($productId));
 		$this->load->view('productView', $data);
 	}
 
-	public function deleteproduct($ProductId) {
-		$deletedRows = $this->ProductServices->deleteProductById($ProductId);
+	public function deleteproduct($productId)
+	{
+		$deletedRows = $this->ProductServices->deleteProductById($productId);
 		if ($deletedRows > 0)
 			$data['message'] = "$deletedRows product has been deleted";
 		else
-			$data['message'] = "There was an error deleting the product with an ID of $ProductId";
+			$data['message'] = "There was an error deleting the product with an ID of $productId";
 		$this->load->view('displayMessageView', $data);
 	}
 
-	public function updateproduct($ProductId) {
+	public function updateproduct($productId)
+	{
 		$pathToFile = $this->uploadAndResizeFile();
 		$this->createThumbnail($pathToFile);
 
@@ -68,34 +77,42 @@ class ProductController extends CI_Controller {
 		$this->form_validation->set_rules('prodSalePrice', 'Sale Price', 'required');
 		$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
 
-		//get values from post
-		$Id = $this->input->post('Id');
-		$product['prodDescription'] = $this->input->post('prodDescription');
-		$product['prodCategory'] = $this->input->post('prodCategory');
-		$product['prodArtist'] = $this->input->post('prodArtist');
-		$product['prodQtyInStock'] = $this->input->post('prodQtyInStock');
-		$product['prodBuyCost'] = $this->input->post('prodBuyCost');
-		$product['prodSalePrice'] = $this->input->post('prodSalePrice');
-		$product['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
-		$product['prodPhoto'] = $_FILES['userfile']['name'];
+		$product = array(
+			"Id" => $this->input->post('Id'),
+			"prodDescription" => $this->input->post('prodDescription'),
+			"prodCategory" => $this->input->post('prodCategory'),
+			"prodArtist" => $this->input->post('prodArtist'),
+			"prodQtyInStock" => $this->input->post('prodQtyInStock'),
+			"prodBuyCost" => $this->input->post('prodBuyCost'),
+			"prodSalePrice" => $this->input->post('prodSalePrice'),
+			"priceAlreadyDiscounted" => $this->input->post('priceAlreadyDiscounted'),
+			"prodPhoto" => $_FILES['userfile']['name']
+		);
+
+		var_dump($product);
+
 
 		//check if the form has passed validation
 		if (!$this->form_validation->run()) {
 			//validation has failed, load the form again
-			$this->load->view('updateproductView', $product);
+			$this->load->view('updateproductView', array("product" => $product));
 			return;
 		}
 
 
+		$productUpdated = $this->ProductServices->updateProduct($product);
 		//check if update is successful
-		if ($this->ProductServices->updateProduct($product)) {
+		if ($productUpdated) {
 			redirect('ProductController/listproducts');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
+			$data['product'] = $product;
+			$this->load->view('updateproductView', $data);
 		}
 	}
 
-	function uploadAndResizeFile() { //set config options for thumbnail creation 
+	function uploadAndResizeFile()
+	{ //set config options for thumbnail creation 
 		$config['upload_path'] = './assets/images/products/full/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size'] = '100';
@@ -125,7 +142,8 @@ class ProductController extends CI_Controller {
 		return $path;
 	}
 
-	function createThumbnail($path) { //set config options for thumbnail creation 
+	function createThumbnail($path)
+	{ //set config options for thumbnail creation 
 		$config['source_image'] = $path;
 		$config['new_image'] = './assets/images/products/thumbs/';
 		$config['maintain_ratio'] = 'FALSE';
@@ -142,7 +160,8 @@ class ProductController extends CI_Controller {
 			echo 'thumbnail created<br>';
 	}
 
-	public function handleInsert() {
+	public function handleInsert()
+	{
 		//if the user has submitted the form
 		if ($this->input->post('submitInsert')) {
 
@@ -205,5 +224,4 @@ class ProductController extends CI_Controller {
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
-
 }
