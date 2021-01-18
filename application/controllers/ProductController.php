@@ -39,7 +39,14 @@ class ProductController extends CI_Controller
 		$data['product_info'] = $this->ProductServices->get_all_product(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
-
+	public function customerListView() 
+	{	$config['base_url']=site_url('ProductController/croductListView/');
+		$config['total_rows']=$this->ProductServices->record_count_c();
+		$config['per_page']=15;
+		$this->pagination->initialize($config);
+		$data['customer_info']=$this->ProductServices->get_all_customers(15,$this->uri->segment(3));
+		$this->load->view('customerListView',$data);
+	}
 	public function editproduct($productId)
 	{
 		$data = array("product" => $this->ProductServices->getProductByCode($productId));
@@ -224,4 +231,353 @@ class ProductController extends CI_Controller
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
+ public function adminOrders()
+    {
+		
+        if($this->input->post('orderNumber'))
+        {
+			$config['total_rows']=$this->ProductServices->record_count_Order();
+			$config['per_page']=15;
+			$this->pagination->initialize($config);
+            
+			$orderNumber = $this->input->post('orderNumber');
+            $data['requiredDate'] = $this->input->post('requiredDate');
+            $data['shippedDate'] = $this->input->post('shippedDate');
+            $data['status'] = $this->input->post('status');
+            $data['comments'] = $this->input->post('comments');
+			
+			//$data['product_info']=$this->ProductServices->update_order($orderNumber, $data,15,$this->uri->segment(3);
+            $this->ProductServices->update_order($orderNumber, $data);
+        }  
+
+        $data = $this->ProductServices->get_orders();
+        $this->load->view('AdminOrders', array('data' => $data));
+    }
+
+    public function orders()
+    {
+        if($this->input->post('orderNumber'))
+        {
+            $orderNumber = $this->input->post('orderNumber');
+            $data['requiredDate'] = $this->input->post('requiredDate');
+            $data['shippedDate'] = $this->input->post('shippedDate');
+            $data['status'] = $this->input->post('status');
+            $data['comments'] = $this->input->post('comments');
+
+            $this->ProductServices->update_order($orderNumber, $data);
+        }  
+
+        $data = $this->ProductServices->get_orders_by_customer($this->session->userdata('customerNumber'));
+        $this->load->view('orders', array('data' => $data));
+        
+    }
+
+    public function delete_order()
+    {
+        $this->ProductServices->delete_order($_GET['orderNumber']);
+        $this->ProductServices->delete_order_details($_GET['orderNumber']);
+        redirect('ProductController/adminOrders');
+    }
+
+    public function cancel_order()
+    { 
+		$this->ProductServices->delete_order_details($_GET['orderNumber']);
+        $this->ProductServices->delete_order($_GET['orderNumber']);
+       
+        redirect('ProductController/orders');
+    }
+
+    public function OrderDetails($orderNumber)
+    {
+		
+		$order = $this->input->post('order');
+		$config['base_url']=site_url('index.php/ProductController/OrderDetails');
+		$data['product_info']=$this->ProductServices->get_order_details($orderNumber);
+		$this->load->view('OrderDetails', $data);
+		
+ 
+    }
+	
+	public function AllOrderDetails()
+    {
+		
+		$config['base_url']=site_url('index.php/ProductController/AdminAllOrderDetails');
+		$data['product_info']=$this->ProductServices->get_all_order_details();
+		$this->load->view('AdminAllOrderDetails', $data);
+		
+ 
+    }
+    public function update_order_details()
+    {
+        if($this->input->post('orderNumber'))
+        {
+			$data = $this->ProductServices->get_order_details($this->input->post('orderNumber'));
+			
+            $data = $this->ProductServices->update_order_details($this->input->post('orderNumber'), $this->input->post('productCode'), $this->input->post('quantity_ordered'));
+
+            
+
+            $this->load->view('admin_order_details',  array('data' => $data));
+        }  
+    }
+	public function SearchProducts()
+	{
+				
+		$search = $this->input->post('searchInput');
+		$config['base_url']=site_url('index.php/ProductController/SearchProducts');
+		$data['product_info']=$this->ProductServices->SearchAllProducts($search );
+		
+		
+		$this->load->view('ProductViews/SearchView', $data);
+			
+	}
+	
+	public function SearchOrders()
+	{
+				
+		$search = $this->input->post('searchOrderInput');
+		$config['base_url']=site_url('index.php/ProductController/SearchOrders');
+		$data['product_info']=$this->ProductServices->SearchAllOrders($search );
+		
+		
+		$this->load->view('ProductViews/SearchOrderView', $data);
+			
+	}
+	
+   	public function ProductWishlist()
+    {
+        $customerNumber = $this->session->userdata('customerNumber');
+        $product_list = $this->ProductServices->get_products_wishlist($customerNumber);
+        $data = null;
+
+
+        for($i=0; $i<count($product_list); $i++)
+        {
+            $produceCode = $product_list[$i]['produceCode'];
+
+            $product_info = $this->ProductServices->getProductId($produceCode);
+            $photo = '<img src="' . base_url() . 'assets/images/products/thumbs/' . $product_info[0]['photo'] . '" alt="' . $product_info[0]['photo'] .'"';
+
+            $data[$i] = array('produceCode' => $product_info[0]['produceCode'], 'description' => $product_info[0]['description'],'bulkBuyPrice' => $product_info[0]['bulkBuyPrice'], 'bulkSalePrice' => $product_info[0]['bulkSalePrice'], 'photo' => $photo);
+
+        }
+
+              
+        $this->load->view('wishlist', array('data' => $data));
+        
+
+    }
+
+    public function addToWishlist()
+    {
+        $customerNumber = $this->session->userdata('customerNumber');
+        $produceCode = $_GET['produceCode'];
+       
+        $this->ProductServices->addToWishlist($customerNumber, $produceCode);
+
+        redirect(base_url('index.php/ProductController/viewProduct/' . $produceCode));
+        
+    }
+	
+	public function removeFromWishlist()
+    {
+        $customerNumber = $this->session->userdata('customerNumber');
+        $produceCode = $_GET['produceCode'];
+
+        $this->ProductServices->removeFromWishlist($customerNumber, $produceCode);
+		redirect(base_url('index.php/ProductController/viewProduct/' . $produceCode));
+    }
+
+    public function removeFromMainWishlist()
+    {
+        $customerNumber = $this->session->userdata('customerNumber');
+        $produceCode = $_GET['produceCode'];
+
+        $this->ProductServices->removeFromWishlist($customerNumber, $produceCode);
+		redirect(base_url('index.php/ProductController/ProductWishlist'));
+    }
+	
+	public function emptyWishlist()
+	{
+		$customerNumber = $this->session->userdata('customerNumber');
+		$this->ProductServices->emptyWishlist($customerNumber);
+        redirect(ProductController);
+		
+	}
+	
+	public function product_by_id() 
+    {   
+        $produceCode = $_GET['produceCode'];
+        $data['products'] = $this->productModel->getProductId($produceCode);
+              
+        foreach($data['products'] as &$row)
+        {
+            $img=$row['image'];
+            $row['image'] = '<img src="' . base_url() . 'assets/images/products/' . $img . '" alt="' . $img .'"';
+            //$row['msrp'] = '€' . $row['msrp']; 
+        }
+
+        $this->load->view('header');        
+        $this->load->view('product', $data);
+        $this->load->view('footer'); 
+    }
+
+	public function cart()
+	{
+		$this->load->view('CartView');
+	}
+	
+	public function emptyCart()
+	{
+		$this->cart->destroy();
+		redirect('ProductController/Cart');
+	}
+	
+    public function addToCart()
+    {
+        $product = $this->ProductServices->getProductId($_GET['produceCode']);
+		$produceCode = $_GET['produceCode'];
+        $photo = '<img src="' . base_url() . 'assets/images/products/thumbs/' . $product[0]['photo'] . '" alt="' . $product[0]['photo'] .'">';
+
+        $data = array(
+            'id'      => $product[0]['produceCode'],
+            'qty'     => 1,
+			'price'   => 39.95,
+            'name' => $product[0]['description'],
+            'photo'   => $photo
+        );
+
+        $this->cart->insert($data);
+        redirect(base_url('index.php/ProductController/viewProduct/'.$produceCode));
+    }
+	
+	public function addToCartFromWishlist()
+    {
+        $product = $this->ProductServices->getProductId($_GET['produceCode']);
+        $photo = '<img src="' . base_url() . 'assets/images/products/thumbs/' . $product[0]['photo'] . '" alt="' . $product[0]['photo'] .'">';
+
+        $data = array(
+            'id'      => $product[0]['produceCode'],
+            'qty'     => 1,
+			'price'   => 39.95,
+            'name' => $product[0]['description'],
+            'photo'   => $photo
+        );
+
+        $this->cart->insert($data);
+       redirect(base_url('index.php/ProductController/ProductWishlist'));
+    }
+
+    public function removeFromCart()
+    {
+        $data = array(
+            'rowid'  => $_GET['rowid'],
+            'qty' => 0
+        );
+
+        $this->cart->update($data);
+        redirect(base_url('index.php/ProductController/Cart'));
+    }
+
+    public function cartQuantity()
+    {
+        $rowid = $this->input->post("rowid");
+        $quantity = $this->input->post("quantity");
+
+        $data = array(
+            'rowid'  => $rowid,
+            'qty' => $quantity
+        );
+
+        $this->cart->update($data);
+      
+        $this->load->view('CartView');
+    }
+
+    public function cartOrder()
+    {
+        $this->load->view('OrderView');
+        
+    }
+
+    public function order_quantity()
+    {
+        $rowid = $this->input->post("rowid");
+        $quantity = $this->input->post("quantity");
+
+        $data = array(
+            'rowid'  => $rowid,
+            'qty' => $quantity
+        );
+
+        $this->cart->update($data);
+     
+        $this->load->view('OrderView');
+    }
+
+    public function remove_from_order()
+    {
+        $data = array(
+            'rowid'  => $_GET['rowid'],
+            'qty' => 0
+        );
+
+        $this->cart->update($data);
+        $this->load->view('order');
+    }
+
+    public function checkout()
+    {
+        $orderDate = 
+        $required_date = "0000-00-00";
+        $orderNumber = null;
+        $loop = true;
+
+        while($loop == true)
+        {
+            $orderNumber = mt_rand(1000,9999);
+
+            if(!$this->ProductServices->if_order_exists($orderNumber))
+            {
+                $loop = false;
+            }
+        }
+
+        $data = array(
+            'orderNumber' => $orderNumber,
+            'orderDate' => date('Y-m-d'),
+            'requiredDate' => "0000-00-00",
+            'status' => "In Process",
+            'customerNumber' => $this->session->userdata('customerNumber')
+        );
+
+        if($this->ProductServices->create_order($data))
+        {
+            foreach ($this->cart->contents() as $item)
+            {
+                $data = array(
+                    'orderNumber' => $orderNumber,
+                    'productCode' => $item['id'],
+                    'quantityOrdered' => $item['qty'],
+                    'priceEach' => $item['price']
+                );
+                
+                $this->ProductServices->create_order_details($data);
+            }        
+
+            $this->cart->destroy();
+			
+            
+			$this->load->view('OrderSuccessful');
+            echo '<br><a href="' . base_url() .'">Return To Homepage</a>'; 
+        }
+
+        else
+        {
+            echo "Error Creating order";
+            echo '<br><a href="' . base_url() .'">Return To Homepage</a>'; 
+        }
+
+    }
+	
 }
