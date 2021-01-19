@@ -24,6 +24,12 @@ $base = base_url() . index_page();
 			<form class="navbar-form">
 				<!-- Search -->
 				<?php
+				if (isset($this->session->userdata["username"])) {
+					$username = $this->session->userdata["username"];
+					echo "You are logged in as " . $username;
+				} else {
+					echo "Please login ";
+				}
 				echo '<div id="search">';
 
 
@@ -42,24 +48,9 @@ $base = base_url() . index_page();
 
 				if ($this->session->userdata('customerNumber')) {
 
-					//wishlist Size Query	
-					$this->db->select('produceCode');
-					$this->db->from('wishlist');
-					$this->db->where('customerNumber', $this->session->userdata('customerNumber'));
-					$query = $this->db->get();
-					$wishlist_size = count($query->result_array());
 
 
-					if ($wishlist_size != 0)
-						//Wislist
-						echo '<a href="' . base_url("index.php/ProductController/ProductWishlist")  . '"><img class = "wislistIcon" src=" ' . $img_base . 'site/wishlist_icon3.png"/><span class = "wishlistIconNumber">(' . $wishlist_size . ')</span></a>';
 
-					if ($this->cart->total_items() != 0)
-						//Cart
-						echo '<a href="' . base_url("index.php/ProductController/Cart")  . '"><img class = "wislistIcon" src=" ' . $img_base . 'site/cart_icon.png"/><span>(' . $this->cart->total_items() . ')</span></a>';
-
-					//Orders
-					echo '<a href="' . base_url("index.php/ProductController/orders")  . '"><span>Orders</span></a>';
 					//Logout
 					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
 				}

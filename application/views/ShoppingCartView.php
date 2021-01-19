@@ -25,7 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<div class="cart_item">';
 					echo '<h5> '.$item['name'] .' </h5> ';
 					$url = "index.php/ProductController/removeFromCart?rowid=" . $item['rowid'] . '"';
-					echo '<div class="removeCart"><a id="xWishlist" title="Remove from Cart" href=" '.base_url($url).' " >x</a> </div>';
 			
 					echo '<div class="cart_image">' . $item['photo'] . '</div>';
 			

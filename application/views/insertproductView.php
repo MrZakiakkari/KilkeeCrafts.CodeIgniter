@@ -11,22 +11,22 @@
 	echo form_input('Id', $Id);
 
 	echo '</br></br>Enter Description :';
-	echo form_input('prodDescription', $prodDescription);
+	echo form_input('Description', $Description);
 
 	echo '</br></br>Enter Category :';
-	echo form_input('prodCategory', $prodCategory);
+	echo form_input('Category', $Category);
 
 	echo '</br></br>Enter Artist :';
-	echo form_input('prodArtist', $prodArtist);
+	echo form_input('Artist', $Artist);
 	
 	echo '</br></br>Enter Product in stock :';
-	echo form_input('prodQtyInStock', $prodQtyInStock);
+	echo form_input('QtyInStock', $QtyInStock);
 	
 	echo '</br></br>Enter Cost :';
-	echo form_input('prodBuyCost', $prodBuyCost);
+	echo form_input('BuyCost', $BuyCost);
 	
 	echo '</br></br>Enter Sale Price :';
-	echo form_input('prodSalePrice', $prodSalePrice);
+	echo form_input('SalePrice', $SalePrice);
 	
 	echo '</br></br>Enter Discount :';
 	echo form_input('priceAlreadyDiscounted', $priceAlreadyDiscounted);

@@ -15,22 +15,22 @@ echo 'Product Code : ';
 echo form_input('Id', $product->Id, 'readonly');
 
 echo '</br></br>Description : ';
-echo form_input('prodDescription', $product->prodDescription);
+echo form_input('Description', $product->Description);
 
 echo '</br></br>Category : ';
-echo form_input('prodCategory', $product->prodCategory);
+echo form_input('Category', $product->Category);
 
 echo '</br></br>Artist : ';
-echo form_input('prodArtist', $product->prodArtist);
+echo form_input('Artist', $product->Artist);
 
 echo '</br></br>Product in stock : ';
-echo form_input('prodQtyInStock', $product->prodQtyInStock);
+echo form_input('QtyInStock', $product->QtyInStock);
 
 echo '</br></br>Cost : ';
-echo form_input('prodBuyCost', $product->prodBuyCost);
+echo form_input('BuyCost', $product->BuyCost);
 
 echo '</br></br>Sale Price : ';
-echo form_input('prodSalePrice', $product->prodSalePrice);
+echo form_input('SalePrice', $product->SalePrice);
 
 echo '</br></br>Discount : ';
 echo form_input('priceAlreadyDiscounted', $product->priceAlreadyDiscounted);

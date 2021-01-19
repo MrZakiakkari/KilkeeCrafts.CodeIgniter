@@ -14,22 +14,22 @@ echo 'Product Code : ';
 echo form_input('Id', $product->Id, 'readonly');
 
 echo '</br></br>Description : ';
-echo form_input('prodDescription', $product->prodDescription, 'readonly');
+echo form_input('Description', $product->Description, 'readonly');
 
 echo '</br></br>Category : ';
-echo form_input('prodCategory', $product->prodCategory, 'readonly');
+echo form_input('DescriptionCategory', $product->DescriptionCategory, 'readonly');
 
 echo '</br></br>Artist : ';
-echo form_input('prodArtist', $product->prodArtist, 'readonly');
+echo form_input('DescriptionArtist', $product->DescriptionArtist, 'readonly');
 
 echo '</br></br>Product in stock : ';
-echo form_input('prodQtyInStock', $product->prodQtyInStock, 'readonly');
+echo form_input('DescriptionQtyInStock', $product->DescriptionQtyInStock, 'readonly');
 
 echo '</br></br>Cost : ';
-echo form_input('prodBuyCost', $product->prodBuyCost, 'readonly');
+echo form_input('DescriptionBuyCost', $product->DescriptionBuyCost, 'readonly');
 
 echo '</br></br>Sale Price : ';
-echo form_input('prodSalePrice', $product->prodSalePrice, 'readonly');
+echo form_input('DescriptionSalePrice', $product->DescriptionSalePrice, 'readonly');
 
 echo '</br></br>Discount : ';
 echo form_input('priceAlreadyDiscounted', $product->priceAlreadyDiscounted, 'readonly');
@@ -38,7 +38,7 @@ echo form_input('priceAlreadyDiscounted', $product->priceAlreadyDiscounted, 'rea
 
 
 echo '</br></br>';
-echo '<img src=' . $img_base . 'full/' . $product->prodPhoto . '>';
+echo '<img src=' . $img_base . 'full/' . $product->Photo . '>';
 
 echo '</br></br>';
 echo form_close();

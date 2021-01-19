@@ -24,7 +24,7 @@ class UserController extends CI_Controller
 
         $user = $this->UserRepository->GetUserByCredentials($email, $password);
         if ($user != null) {
-            $sessiondata = array('customerNumber' => $user->custNumber, 'email' => $email, 'contactFirstName' => $user->custFirstName);
+            $sessiondata = array('customerNumber' => $user->Number, 'email' => $email, 'username' => $user->FirstName);
 
             $this->session->set_userdata($sessiondata);
         } else {
@@ -33,60 +33,16 @@ class UserController extends CI_Controller
         redirect("ProductController/index");
     }
 
-    public function login_admin()
-    {
-        if ($this->input->post("username")) {
-            //Get the posted values
-            $username = $this->input->post("username");
-            $password = $this->input->post("password");
-            $adminNumber = null;
-            $stored_password = null;
-
-            $user = $this->UserRepository->getAdmin($username); //Gets ID and password hash of user
-
-            //var_dump($user);
-            foreach ($user as $row) {
-                $adminNumber = $row['adminNumber'];
-                $stored_password = $row['password'];
-            }
-
-            $hashed_password = hash('sha256', $adminNumber . $password); //Concatonates user id and password and hashes it
-
-            if ($user != null && $hashed_password == $stored_password) //Compares entered password and stored password hashes
-            {
-                //Set the session variables, logging the user in
-                $sessiondata = array('adminNumber' => $adminNumber, 'username' => $username);
-                $this->session->set_userdata($sessiondata);
-                echo "logged in";
-                redirect("MoylishMarketController");
-            } else {
-                $this->session->set_flashdata('login_failed', 'Invalid username or password!');
-                redirect("UserController/login");
-            }
-        }
-    }
-
     public function login()
     {
         $this->load->view('header');
         $this->load->view('Login_Register');
 
-        $passwordhash = 'sha256';
-        $custPassowrd = hash($passwordhash, "letmein");
-        echo $custPassowrd;
+
     }
 
     public function logout_user()
     {
-        //Ends the session, logging the user out
-        // deletes my test cookie
-        //delete_cookie($name,$value,$expire,$path,$domain);
-        // deletes my remember me cookie
-        //delete_cookie($name1,$value1,$expire1,$path1,$domain1);
-        $customerNumber = $this->session->userdata('customerNumber');
-        $user = $this->UserRepository->getRemeberMe();
-        if ($user != null)
-            $this->UserRepository->deleteRememberMe($customerNumber);
         $this->session->sess_destroy();
 
         redirect("ProductController/index");
@@ -94,33 +50,28 @@ class UserController extends CI_Controller
 
     public function createAccount()
     {
-        $values = $_POST;
+        $user['Number'] = $this->input->post('Number');
+        $user['LastName'] = $this->input->post('LastName');
+		$user['FirstName'] = $this->input->post('FirstName');
+        $user['Phone'] = $this->input->post('Phone');
+        $user['AddressLine1'] = $this->input->post('AddressLine1');
+        $user['AddressLine2'] = $this->input->post('AddressLine2');
+        $user['City'] = $this->input->post('City');
+        $user['PostalCode'] = $this->input->post('PostalCode');
+        $user['Country'] = $this->input->post('Country');
+        $user['CreditLimit'] = $this->input->post('CreditLimit');
+        $user['Email'] = $this->input->post('Email');
+		$user['Password'] = $this->input->post('Password');
+       $inserted=  $this->UserRepository->createAccount($user);
 
-        $loop = true;
-
-        while ($loop == true) {
-            $customerNumber = mt_rand(1000, 9999);
-
-            if (!$this->UserRepository->if_ID_Exists($customerNumber)) {
-                $loop = false;
-            }
-        }
-
-        $hashed_password = hash('sha256', $customerNumber . $this->input->post('password')); //Concatonates user id and password and hashes it
-
-        $values['customerNumber'] = $customerNumber;
-        $values['password'] = $hashed_password;
-
-        $user = $this->UserRepository->createAccount($values);
-
-        if ($user) {
+        if ($inserted) {
             $this->session->set_flashdata('create_account_success', 'Account Created');
         } else {
             $this->session->set_flashdata('create_account_failed', 'Error! Account creation failed');
         }
 
         $this->load->view('header');
-        $this->load->view('login');
+        $this->load->view('login_Register');
     }
 
 

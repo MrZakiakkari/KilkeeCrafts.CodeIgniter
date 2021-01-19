@@ -12,27 +12,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table>
 		<tr>
 			<th align="left" width="100">Id</th>
-			<th align="left" width="100">prodDescription</th>
-			<th align="left" width="100">prodCategory</th>
-			<th align="left" width="100">prodArtist</th>
-			<th align="left" width="100">prodQtyInStock</th>
-			<th align="left" width="100">prodBuyCost</th>
-			<th align="left" width="100">prodSalePrice</th>
+			<th align="left" width="100">Description</th>
+			<th align="left" width="100">Category</th>
+			<th align="left" width="100">Artist</th>
+			<th align="left" width="100">QtyInStock</th>
+			<th align="left" width="100">BuyCost</th>
+			<th align="left" width="100">SalePrice</th>
 			<th align="left" width="100">priceAlreadyDiscounted</th>
-			<th align="left" width="100">prodPhoto</th>
+			<th align="left" width="100">Photo</th>
 		</tr>
 
 		<?php foreach($product_info as $row){?>
 		<tr>
 			<td><?php echo $row->Id;?></td>
-			<td><?php echo $row->prodDescription;?></td>
-			<td><?php echo $row->prodCategory;?></td>
-			<td><?php echo $row->prodArtist;?></td>
-			<td><?php echo $row->prodQtyInStock;?></td>
-			<td><?php echo $row->prodBuyCost;?></td>
-			<td><?php echo $row->prodSalePrice;?></td>
+			<td><?php echo $row->Description;?></td>
+			<td><?php echo $row->Category;?></td>
+			<td><?php echo $row->Artist;?></td>
+			<td><?php echo $row->QtyInStock;?></td>
+			<td><?php echo $row->BuyCost;?></td>
+			<td><?php echo $row->SalePrice;?></td>
 			<td><?php echo $row->priceAlreadyDiscounted;?></td>
-			<td><img src="<?php echo $img_base.'thumbs/'.$row->prodPhoto;?>"></td>
+			<td><img src="<?php echo $img_base.'thumbs/'.$row->Photo;?>"></td>
 			<td><?php echo anchor('ProductController/viewproduct/'.$row->Id,'View');?></td>
 			<td><?php echo anchor('ProductController/editproduct/'.$row->Id,'Update');?></td>
 			<td><?php echo anchor('ProductController/deleteproduct/'.$row->Id,

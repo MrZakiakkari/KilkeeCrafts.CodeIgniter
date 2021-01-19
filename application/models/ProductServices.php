@@ -37,7 +37,7 @@ function get_all_customers($limit,$offset)
 	}
 	public function drilldown($products)
 	{	
-		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,priceAlreadyDiscounted,prodPhoto"); 
+		$this->db->select("Id,Description,Category,Artist,QtyInStock,BuyCost,SalePrice,priceAlreadyDiscounted,Photo"); 
 		$this->db->from('products');
 		$this->db->where('produceCode',$products);
 		$query = $this->db->get();
@@ -51,7 +51,7 @@ function get_all_customers($limit,$offset)
 public function SearchAllProducts($search)
 	{
 		
-		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,priceAlreadyDiscounted,prodPhoto");
+		$this->db->select("Id,Description,Category,Artist,QtyInStock,BuyCost,SalePrice,priceAlreadyDiscounted,Photo");
 		$this->db->from('products');
 		//$this->db->where('description') 
 		$this->db->like('description',$search, 'both');
@@ -81,48 +81,6 @@ public function SearchAllProducts($search)
 		return $query->result();
 	}
 	
-	public function addToWishlist($customerNumber, $produceCode)
-    {
-        $data = array(
-            'customerNumber' => $customerNumber,
-            'produceCode' => $produceCode
-        );
-
-        $this->db->insert('wishlist', $data);
-    }
-	
-	public function removeFromWishlist($customerNumber, $produceCode)
-    {
-        $this->db->where('customerNumber', $customerNumber);
-        $this->db->where('produceCode', $produceCode);
-        $this->db->delete('wishlist');    
-    }
-	
-	public function emptyWishlist($customerNumber)
-    {
-        $this->db->where('customerNumber', $customerNumber);        
-        $this->db->delete('wishlist');    
-    }
-	
-	public function get_products_wishlist($customerNumber) 
-    {
-        $this->db->select('produceCode');
-        $this->db->from('wishlist');
-        $this->db->where('customerNumber', $customerNumber);
-        $query = $this->db->get();
-
-        return $query->result_array();
-    }
-	
-	public function getProductWishlist($customerNumber) 
-    {
-        $this->db->select('produceCode');
-        $this->db->from('wishlist');
-        $this->db->where('customerNumber', $customerNumber);
-        $query = $this->db->get();
-
-        return $query->result_array();
-    }
 	
 	function updateProduct($product)
 	{
@@ -146,7 +104,7 @@ public function SearchAllProducts($search)
 	function get_all_product($limit, $offset)
 	{
 		$this->db->limit($limit, $offset);
-		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,priceAlreadyDiscounted,prodPhoto");
+		$this->db->select("Id,Description,Category,Artist,QtyInStock,BuyCost,SalePrice,priceAlreadyDiscounted,Photo");
 		$this->db->from('product');
 		$query = $this->db->get();
 		return $query->result();
@@ -157,7 +115,7 @@ public function SearchAllProducts($search)
 	function getProductByCode($code)
 	{
 
-		$this->db->select("Id,prodDescription,prodCategory,prodArtist,prodQtyInStock,prodBuyCost,prodSalePrice,prodPhoto,priceAlreadyDiscounted");
+		$this->db->select("Id,Description,Category,Artist,QtyInStock,BuyCost,SalePrice,Photo,priceAlreadyDiscounted");
 		$this->db->from('product');
 		$this->db->where('Id', $code);
 
