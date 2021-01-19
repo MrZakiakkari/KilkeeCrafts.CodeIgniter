@@ -26,7 +26,10 @@ class UserRepository extends CI_Model
             return false;
     }
 
-
+public function HashPassword($Password){
+	$Password = hash($this->passwordhash, $Password);
+	
+}
 
 
     public function GetUserByCredentials($Email, $Password)

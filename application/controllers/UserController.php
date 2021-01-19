@@ -61,7 +61,7 @@ class UserController extends CI_Controller
         $user['Country'] = $this->input->post('Country');
         $user['CreditLimit'] = $this->input->post('CreditLimit');
         $user['Email'] = $this->input->post('Email');
-		$user['Password'] = $this->input->post('Password');
+		$user['Password'] = $this->userRepository->HashPassword($this->input->post('Password')) ;
        $inserted=  $this->UserRepository->createAccount($user);
 
         if ($inserted) {
