@@ -24,7 +24,7 @@ class UserController extends CI_Controller
 
         $user = $this->UserRepository->GetUserByCredentials($email, $password);
         if ($user != null) {
-            $sessiondata = array('customerNumber' => $user->Number, 'email' => $email, 'username' => $user->FirstName, "type" => "customer");
+            $sessiondata = array('CustomerId' => $user->Number, 'email' => $email, 'username' => $user->FirstName, "type" => "customer");
 
             $this->session->set_userdata($sessiondata);
          
@@ -34,10 +34,16 @@ class UserController extends CI_Controller
         redirect("ProductController/index");
     }
 
+    
+    public function register()
+    {
+        
+        $this->load->view('UserRegister');
+    }
     public function login()
     {
         
-        $this->load->view('Login_Register');
+        $this->load->view('UserLogin');
     }
 
     public function logout_user()

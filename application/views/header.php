@@ -46,10 +46,10 @@ $base = base_url() . index_page();
 			<div class="ShoppingBasket">
 				<?php
 
-				if ($this->session->userdata('customerNumber')) {
+				if ($this->session->userdata('CustomerNumber') != null) {
 
 
-                        echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
 					echo '<a href="' . base_url('ProductController/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
 					echo '<a href="' . base_url('ProductController/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 
@@ -57,7 +57,7 @@ $base = base_url() . index_page();
 					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
 				}
 				//Admin
-				else if ($this->session->userdata('adminNumber')) {
+				else if ($this->session->userdata('AdminNumber') != null) {
 					//Control Panel
 					echo '<a href="' . base_url("index.php/AdminController/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
 					echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
@@ -69,7 +69,10 @@ $base = base_url() . index_page();
 				} else {
 					//Login
 					echo '<div id="header_login">';
-					echo '<a href="' . base_url() . "index.php/UserController/login" . '">Login/Create Account</a><br>';
+					echo '<a href="' . base_url() . "index.php/UserController/login" . '">Login<a><br>';
+					echo '<a href="' . base_url() . "index.php/Admin/login" . '">Admin</a><br>';
+					echo '<a href="' . base_url() . "index.php/UserController/register" . '">Register</a><br>';
+
 					echo '</div>';
 				}
 

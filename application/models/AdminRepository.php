@@ -1,6 +1,6 @@
 <?php
 
-class UserRepository extends CI_Model
+class AdminRepository extends CI_Model
 {
 
     public function __construct()
@@ -10,7 +10,10 @@ class UserRepository extends CI_Model
 
     }
 
-
+    public function createPasswordHash($plainTextPassword)
+    {
+        return hash($this->AdminSchema->Password_Hash, $plainTextPassword);
+    }
   
 
     public function GetAdminByCredentials($name, $Password)

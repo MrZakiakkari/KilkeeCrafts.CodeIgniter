@@ -32,11 +32,11 @@ class ProductController extends CI_Controller
 	{ //config options for pagination
 		$paginationConfig = array(
 			'base_url' => site_url('ProductController/listproducts/'),
-			'total_rows' => $this->ProductServices->record_count(),
+			'total_rows' => $this->ProductServices->getProductCount(),
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['product_info'] = $this->ProductServices->get_all_product(2, $this->uri->segment(3));
+		$data['product_info'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
 	public function customerListView() 
@@ -44,18 +44,18 @@ class ProductController extends CI_Controller
 		$config['total_rows']=$this->ProductServices->record_count_c();
 		$config['per_page']=15;
 		$this->pagination->initialize($config);
-		$data['customer_info']=$this->ProductServices->get_all_customers(15,$this->uri->segment(3));
+		$data['customer_info']=$this->ProductServices->getProductRange(15,$this->uri->segment(3));
 		$this->load->view('customerListView',$data);
 	}
 	public function editproduct($productId)
 	{
-		$data = array("product" => $this->ProductServices->getProductByCode($productId));
+		$data = array("product" => $this->ProductServices->getProductById($productId));
 		$this->load->view('updateproductView', $data);
 	}
 
 	public function viewproduct($productId)
 	{
-		$data = array('product' => $this->ProductServices->getProductByCode($productId));
+		$data = array('product' => $this->ProductServices->getProductById($productId));
 		$this->load->view('productView', $data);
 	}
 
@@ -239,7 +239,7 @@ class ProductController extends CI_Controller
 				
 		$search = $this->input->post('searchInput');
 		$config['base_url']=site_url('index.php/ProductController/SearchProducts');
-		$data['product_info']=$this->ProductServices->SearchAllProducts($search );
+		$data['product_info']=$this->ProductServices->getProductsMatchingDescription($search );
 		
 		
 		$this->load->view('ProductViews/SearchView', $data);

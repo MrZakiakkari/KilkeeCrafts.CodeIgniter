@@ -16,6 +16,7 @@ class AdminSchema extends CI_Model
 	public string $Id = "Id";
 	public string $AdminName = "AdminName";
 	public string $Password = "Password";
+	public string $Password_Hash = "sha256";
 }
 class ArtistSchema extends CI_Model
 {

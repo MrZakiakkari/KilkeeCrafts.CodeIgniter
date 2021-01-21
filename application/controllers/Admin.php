@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserController extends CI_Controller
+class Admin extends CI_Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class UserController extends CI_Controller
 
         $user = $this->AdminRepository->GetAdminByCredentials($name, $password);
         if ($user != null) {
-            $sessiondata = array('Id' => $user->Number, 'AdminName' => $name, "type" => "admin");
+            $sessiondata = array('AdminId' => $user->Id, 'username' => $name, "type" => "admin");
 
             $this->session->set_userdata($sessiondata);
          
@@ -34,10 +34,15 @@ class UserController extends CI_Controller
         redirect("ProductController/index");
     }
 
+    public function index()
+    {
+        
+        $this->load->view('AdminLogin');
+    }
     public function login()
     {
         
-        $this->load->view('Login_Register');
+        $this->load->view('AdminLogin');
     }
 
     public function logout_user()

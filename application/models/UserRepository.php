@@ -7,9 +7,7 @@ class UserRepository extends CI_Model
     {
         $this->load->model("schema/KilkeekraftsSchema");
         $this->load->model("schema/CustomerSchema");
-
     }
-
 
     public function createPasswordHash($plainTextPassword)
     {
@@ -18,10 +16,6 @@ class UserRepository extends CI_Model
 
     public function getCustomer($email)
     {
-        //Checks db for customer with matching email
-        $this->db->select('contactFirstName');
-        $this->db->select('customerNumber');
-        $this->db->select('password');
         $this->db->from('customer');
         $this->db->where('email', $email);
         $query = $this->db->get();

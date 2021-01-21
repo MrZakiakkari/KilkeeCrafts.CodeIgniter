@@ -17,19 +17,19 @@ echo '</br></br>Description : ';
 echo form_input('Description', $product->Description, 'readonly');
 
 echo '</br></br>Category : ';
-echo form_input('DescriptionCategory', $product->DescriptionCategory, 'readonly');
+echo form_input('DescriptionCategory', $product->Description, 'readonly');
 
 echo '</br></br>Artist : ';
-echo form_input('DescriptionArtist', $product->DescriptionArtist, 'readonly');
+echo form_input('DescriptionArtist', $product->Artist, 'readonly');
 
 echo '</br></br>Product in stock : ';
-echo form_input('DescriptionQtyInStock', $product->DescriptionQtyInStock, 'readonly');
+echo form_input('DescriptionQtyInStock', $product->QtyInStock, 'readonly');
 
 echo '</br></br>Cost : ';
-echo form_input('DescriptionBuyCost', $product->DescriptionBuyCost, 'readonly');
+echo form_input('DescriptionBuyCost', $product->BuyCost, 'readonly');
 
 echo '</br></br>Sale Price : ';
-echo form_input('DescriptionSalePrice', $product->DescriptionSalePrice, 'readonly');
+echo form_input('DescriptionSalePrice', $product->SalePrice, 'readonly');
 
 echo '</br></br>Discount : ';
 echo form_input('priceAlreadyDiscounted', $product->priceAlreadyDiscounted, 'readonly');
