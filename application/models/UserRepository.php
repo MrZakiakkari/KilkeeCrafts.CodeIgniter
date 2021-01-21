@@ -3,6 +3,18 @@
 class UserRepository extends CI_Model
 {
 
+    public function __construct()
+    {
+        $this->load->model("schema/KilkeekraftsSchema");
+        $this->load->model("schema/CustomerSchema");
+
+    }
+
+
+    public function createPasswordHash($plainTextPassword)
+    {
+        return hash($this->CustomerSchema->Password_Hash, $plainTextPassword);
+    }
 
     public function getCustomer($email)
     {
@@ -26,17 +38,11 @@ class UserRepository extends CI_Model
             return false;
     }
 
-public function HashPassword($Password){
-	$Password = hash($this->passwordhash, $Password);
-	
-}
-
 
     public function GetUserByCredentials($Email, $Password)
     {
-        $Password = hash($this->passwordhash, $Password);
+        $Password = $this->createPasswordHash($Password);
         $query = $this->db->get_where('customer', array("Email" => $Email, "Password" => $Password));
         return $query->num_rows() == 0 ? null : $query->result()[0];
     }
-    private $passwordhash = 'sha256';
 }

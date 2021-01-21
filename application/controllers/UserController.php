@@ -24,9 +24,10 @@ class UserController extends CI_Controller
 
         $user = $this->UserRepository->GetUserByCredentials($email, $password);
         if ($user != null) {
-            $sessiondata = array('customerNumber' => $user->Number, 'email' => $email, 'username' => $user->FirstName);
+            $sessiondata = array('customerNumber' => $user->Number, 'email' => $email, 'username' => $user->FirstName, "type" => "customer");
 
             $this->session->set_userdata($sessiondata);
+         
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
         }
@@ -35,10 +36,8 @@ class UserController extends CI_Controller
 
     public function login()
     {
-        $this->load->view('header');
+        
         $this->load->view('Login_Register');
-
-
     }
 
     public function logout_user()
@@ -52,7 +51,7 @@ class UserController extends CI_Controller
     {
         $user['Number'] = $this->input->post('Number');
         $user['LastName'] = $this->input->post('LastName');
-		$user['FirstName'] = $this->input->post('FirstName');
+        $user['FirstName'] = $this->input->post('FirstName');
         $user['Phone'] = $this->input->post('Phone');
         $user['AddressLine1'] = $this->input->post('AddressLine1');
         $user['AddressLine2'] = $this->input->post('AddressLine2');
@@ -61,8 +60,8 @@ class UserController extends CI_Controller
         $user['Country'] = $this->input->post('Country');
         $user['CreditLimit'] = $this->input->post('CreditLimit');
         $user['Email'] = $this->input->post('Email');
-		$user['Password'] = $this->userRepository->HashPassword($this->input->post('Password')) ;
-       $inserted=  $this->UserRepository->createAccount($user);
+        $user['Password'] = $this->UserRepository->createPasswordHash($this->input->post('Password'));
+        $inserted =  $this->UserRepository->createAccount($user);
 
         if ($inserted) {
             $this->session->set_flashdata('create_account_success', 'Account Created');

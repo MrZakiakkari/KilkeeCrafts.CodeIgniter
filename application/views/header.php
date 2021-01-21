@@ -49,7 +49,9 @@ $base = base_url() . index_page();
 				if ($this->session->userdata('customerNumber')) {
 
 
-
+                        echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('ProductController/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('ProductController/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 
 					//Logout
 					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
@@ -57,9 +59,12 @@ $base = base_url() . index_page();
 				//Admin
 				else if ($this->session->userdata('adminNumber')) {
 					//Control Panel
-					echo '<a href="' . base_url("index.php/UserController/controlPanel") . '"><span>' . $this->session->userdata('username') . '</span></a>';
+					echo '<a href="' . base_url("index.php/AdminController/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
+					echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('ProductController/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('ProductController/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 					//Admin logout
-					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
+					echo '<a href="' . base_url("index.php/AdminController/logout_user")  . '"><span>Logout</span></a>';
 					//echo '<div id="'
 				} else {
 					//Login
