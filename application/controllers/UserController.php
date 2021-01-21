@@ -45,6 +45,11 @@ class UserController extends CI_Controller
         
         $this->load->view('UserLogin');
     }
+    public function index()
+    {
+        
+        $this->load->view('UserLogin');
+    }
 
     public function logout_user()
     {
@@ -79,9 +84,4 @@ class UserController extends CI_Controller
         $this->load->view('login_Register');
     }
 
-
-    public function controlPanel()
-    {
-        $this->load->view('controlPanel');
-    }
 }

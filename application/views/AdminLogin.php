@@ -28,10 +28,4 @@ if ($this->session->userdata('AdminId') != null) {
 					echo '</div>';
 					?>
 				</div>
-			</div>
-
-
-		</div>
-	</div>
-</div>
 <?php $this->load->view('footer'); ?>

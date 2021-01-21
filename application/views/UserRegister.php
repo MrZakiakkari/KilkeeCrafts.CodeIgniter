@@ -36,7 +36,6 @@ if ($this->session->userdata('CustomerId') != null) {
 				echo '</div>';
 				?>
 			</div>
-		</div>
-	</div>
-</div>
+		
+
 <?php $this->load->view('footer'); ?>

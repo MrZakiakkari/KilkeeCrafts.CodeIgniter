@@ -39,14 +39,7 @@ class ProductController extends CI_Controller
 		$data['product_info'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
-	public function customerListView() 
-	{	$config['base_url']=site_url('ProductController/croductListView/');
-		$config['total_rows']=$this->ProductServices->record_count_c();
-		$config['per_page']=15;
-		$this->pagination->initialize($config);
-		$data['customer_info']=$this->ProductServices->getProductRange(15,$this->uri->segment(3));
-		$this->load->view('customerListView',$data);
-	}
+ 
 	public function editproduct($productId)
 	{
 		$data = array("product" => $this->ProductServices->getProductById($productId));

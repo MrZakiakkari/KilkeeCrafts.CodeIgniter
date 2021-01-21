@@ -81,7 +81,6 @@ $base = base_url() . index_page();
 			<br>
 		</div>
 
-
 		<?= anchor('ProductController/index', 'Home', 'title="Home"'); ?>
 		&nbsp;&nbsp;&nbsp;
 		<?= anchor('ProductController/handleInsert', 'Insert', 'title="Insert"'); ?>
