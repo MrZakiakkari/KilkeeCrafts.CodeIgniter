@@ -10,34 +10,7 @@
 		<!-- <input type="button" value="Go back!" onclick="history.back()"> -->
 		<div class="row">
 			<div class="col-md-6" >
-				<div class = "panel-body-login">
-				<?php
-				echo '<div id="login_form">';		
-				echo form_open('UserController/login_user'); 
-				echo '<span id="login_heading">Login as a User</span><br>';
-				echo form_input(array('class' => 'form_field', 'name' => 'email', 'type' => 'email', 'placeholder' => 'Email', 'required'=>'required')).'<br>';	
-				echo form_input(array('class' => 'form_field', 'name' => 'password', 'type' => 'password', 'placeholder' => '*********', 'required'=>'required')).'<br>';	
 				
-
-				echo form_submit(array('id' => 'login_btn', 'value' => 'Login')).'<br>';
-				echo form_close(); 	
-				
-				echo '<span id="login_failed">' . $this->session->flashdata('login_failed') . '</span>';			               		 
-				echo '</div><br><br>';
-				
-				echo '<div id="login_form">';		
-				echo form_open('Admin/login_admin'); 
-				echo '<span id="login_heading">Login as an Admin</span><br>';
-				echo form_input(array('class' => 'form_field', 'name' => 'AdminName', 'type' => 'text', 'placeholder' => 'Username', 'required'=>'required')).'<br>';	
-				echo form_input(array('class' => 'form_field', 'name' => 'Password', 'type' => 'password', 'placeholder' => '*********', 'required'=>'required')).'<br><br>';	
-				echo form_submit(array('id' => 'login_btn', 'value' => 'Login'));
-				echo form_close();
-				
-				echo '<span id="login_failed">' . $this->session->flashdata('login_failed') . '</span>';				
-				echo '</div>';			
-				
-				?>
-				</div>
 			</div>
 		
 			<div class="col-md-6" >
@@ -45,7 +18,7 @@
 				<?php
 					if($this->session->userdata('Number'))
 					{
-						redirect(KilkeekraftsController);	
+						redirect(Kilkeekrafts);	
 					}
 
 					echo '<div id="create_account_form">';
