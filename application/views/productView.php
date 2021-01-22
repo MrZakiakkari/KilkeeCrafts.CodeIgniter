@@ -20,7 +20,7 @@ echo '</br></br>Category : ';
 echo form_input('Category', $product->Description, 'readonly');
 
 echo '</br></br>Artist : ';
-echo form_input('DescriptionArtist', $product->Artist, 'readonly');
+echo form_input('Artist', $product->Artist, 'readonly');
 
 echo '</br></br>Product in stock : ';
 echo form_input('QtyInStock', $product->QtyInStock, 'readonly');

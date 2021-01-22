@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class ProductController extends CI_Controller
+class Product extends CI_Controller
 {
 
 	public function __construct()
@@ -31,7 +31,7 @@ class ProductController extends CI_Controller
 	public function listproducts()
 	{ //config options for pagination
 		$paginationConfig = array(
-			'base_url' => site_url('ProductController/listproducts/'),
+			'base_url' => site_url('Product/listproducts/'),
 			'total_rows' => $this->ProductServices->getProductCount(),
 			'per_page' => 2
 		);
@@ -103,7 +103,7 @@ class ProductController extends CI_Controller
 		$productUpdated = $this->ProductServices->updateProduct($product);
 		//check if update is successful
 		if ($productUpdated) {
-			redirect('ProductController/listproducts');
+			redirect('Product/listproducts');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
 			$data['product'] = $product;
@@ -231,7 +231,7 @@ class ProductController extends CI_Controller
 	{
 				
 		$search = $this->input->post('searchInput');
-		$config['base_url']=site_url('index.php/ProductController/SearchProducts');
+		$config['base_url']=site_url('index.php/Product/SearchProducts');
 		$data['product_info']=$this->ProductServices->getProductsMatchingDescription($search );
 		
 		

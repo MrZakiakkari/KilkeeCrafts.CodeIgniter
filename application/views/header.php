@@ -49,9 +49,9 @@ $base = base_url() . index_page();
 				if ($this->session->userdata('CustomerNumber') != null) {
 
 
-					echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('ProductController/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('ProductController/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
+					echo '<a href="' . base_url('Product/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('Product/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('Product/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 
 					//Logout
 					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
@@ -59,19 +59,19 @@ $base = base_url() . index_page();
 				//Admin
 				else if ($this->session->userdata('AdminNumber') != null) {
 					//Control Panel
-					echo '<a href="' . base_url("index.php/AdminController/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
-					echo '<a href="' . base_url('ProductController/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('ProductController/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('ProductController/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
+					echo '<a href="' . base_url("index.php/Admin/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
+					echo '<a href="' . base_url('Product/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('Product/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('Product/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 					//Admin logout
-					echo '<a href="' . base_url("index.php/AdminController/logout_user")  . '"><span>Logout</span></a>';
+					echo '<a href="' . base_url("index.php/Admin/logout_user")  . '"><span>Logout</span></a>';
 					//echo '<div id="'
 				} else {
 					//Login
 					echo '<div id="header_login">';
-					echo '<a href="' . base_url() . "index.php/UserController/login" . '">Login<a><br>';
+					echo '<a href="' . base_url() . "index.php/User/login" . '">Login<a><br>';
 					echo '<a href="' . base_url() . "index.php/Admin/login" . '">Admin</a><br>';
-					echo '<a href="' . base_url() . "index.php/UserController/register" . '">Register</a><br>';
+					echo '<a href="' . base_url() . "index.php/User/register" . '">Register</a><br>';
 
 					echo '</div>';
 				}

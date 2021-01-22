@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class KilkeekraftsController extends CI_Controller {
+class Kilkeekrafts extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
@@ -27,7 +27,7 @@ class KilkeekraftsController extends CI_Controller {
             }
             if(isset($_COOKIE['Cookie_Email']))
 			{
-                 redirect('ProductController');
+                 redirect('Product');
              }
               
             

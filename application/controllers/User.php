@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserController extends CI_Controller
+class User extends CI_Controller
 {
     public function __construct()
     {
@@ -31,7 +31,7 @@ class UserController extends CI_Controller
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
         }
-        redirect("ProductController/index");
+        redirect("Product/index");
     }
 
     
@@ -55,7 +55,7 @@ class UserController extends CI_Controller
     {
         $this->session->sess_destroy();
 
-        redirect("ProductController/index");
+        redirect("Product/index");
     }
 
     public function createAccount()

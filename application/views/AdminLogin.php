@@ -4,7 +4,7 @@ $this->load->helper('url');
 $base = base_url() . index_page();
 
 if ($this->session->userdata('AdminId') != null) {
-	redirect($base . "/KilkeekraftsController");
+	redirect($base . "/Kilkeekrafts");
 } ?>
 
 <?php $this->load->view('header'); ?>
