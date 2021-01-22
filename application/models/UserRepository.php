@@ -14,15 +14,7 @@ class UserRepository extends CI_Model
         return hash($this->CustomerSchema->Password_Hash, $plainTextPassword);
     }
 
-    public function getCustomer($email)
-    {
-        $this->db->from('customer');
-        $this->db->where('email', $email);
-        $query = $this->db->get();
-
-        //returns users email and password
-        return $query->result_array();
-    }
+    
     public function createAccount($values)
     {
         if ($this->db->insert('customer', $values))

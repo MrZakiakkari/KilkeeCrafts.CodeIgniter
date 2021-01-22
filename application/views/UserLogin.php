@@ -29,9 +29,5 @@ if ($this->session->userdata('CustomerId') != null) {
 					?>
 				</div>
 			</div>
-
-
-		</div>
-	</div>
-</div>
+	
 <?php $this->load->view('footer'); ?>
