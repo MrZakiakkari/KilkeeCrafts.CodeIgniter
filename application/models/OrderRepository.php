@@ -17,19 +17,19 @@ class OrderRepository extends CI_Model
 		return $this->db->affected_rows() == 1;
 	}
 
-	function getOrderById($code)
+	function getOrderById($Id)
 	{
 
-		$this->db->select("OrderNumber, OrderDate, RequiredDate, ShippedDate, Status, Comments, CustomerNumber");
+		$this->db->select("Id, OrderDate, RequiredDate, ShippedDate, Status, Comments, CustomerNumber");
 		$this->db->from('orders');
-		$this->db->where('OrderNumber', $code);
+		$this->db->where('Id', $Id);
 
 		$query = $this->db->get();
 		return $query->result()[0];
 	}
 	function deleteOrderById($OrderId)
 	{
-		$this->db->where('OrderNumber', $OrderId);
+		$this->db->where('Id', $OrderId);
 		return $this->db->delete($this->table);
 	}
 	function getOrderCount()
@@ -39,7 +39,7 @@ class OrderRepository extends CI_Model
 	public function getOrdersMatchingDescription($description)
 	{
 		$this->db->from($this->table);
-		$this->db->like('OrderNumber', $description, 'both');
+		$this->db->like('CustomerNumber', $description, 'both');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -58,7 +58,7 @@ class OrderRepository extends CI_Model
 	}
 	function updateOrder($orders)
 	{
-		$this->db->where("OrderNumber", $orders["OrderNumber"]);
+		$this->db->where("Id", $orders["Id"]);
 		$this->db->update($this->table, $orders);
 		return $this->db->affected_rows() == 1;
 	}

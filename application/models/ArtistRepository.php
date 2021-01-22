@@ -13,12 +13,12 @@ class ArtistRepository extends CI_Model
 
 	
 
-	function getArtistById($code)
+	function getArtistById($Id)
 	{
 
 		$this->db->select("Id, BusinessName, Address, Contact, Phone, Photo");
 		$this->db->from('artist');
-		$this->db->where('Id', $code);
+		$this->db->where('Id', $Id);
 
 		$query = $this->db->get();
 		return $query->result()[0];

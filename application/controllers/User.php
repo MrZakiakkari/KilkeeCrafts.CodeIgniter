@@ -80,7 +80,7 @@ class User extends CI_Controller
             $this->session->set_flashdata('create_account_failed', 'Error! Account creation failed');
         }
 
-        $this->load->view('header');
+        
         $this->load->view('login_Register');
     }
 
