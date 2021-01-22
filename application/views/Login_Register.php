@@ -49,7 +49,7 @@
 					}
 
 					echo '<div id="create_account_form">';
-					echo form_open('UserController/createAccount'); 	
+					echo form_open('User/createAccount'); 	
 					echo '<span id="create_account_heading">Create Account</span><br>';
 					echo form_input(array('class' => 'form_field', 'name' => 'Email', 'type' => 'email', 'placeholder' => 'Email', 'required'=>'required||min_length[10] '   )).'<br>';
 					echo form_input(array('class' => 'form_field', 'name' => 'Password', 'type' => 'password', 'placeholder' => 'Password', 'required'=>'required||min_length[8]')).'<br>';

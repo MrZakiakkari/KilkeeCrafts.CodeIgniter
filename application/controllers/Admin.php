@@ -31,7 +31,7 @@ class Admin extends CI_Controller
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
         }
-        redirect("ProductController/index");
+        redirect("Product/index");
     }
 
     public function index()
@@ -49,7 +49,7 @@ class Admin extends CI_Controller
     {
         $this->session->sess_destroy();
 
-        redirect("ProductController/index");
+        redirect("Product/index");
     }
 	 
 }

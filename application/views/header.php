@@ -54,7 +54,7 @@ $base = base_url() . index_page();
 					echo '<a href="' . base_url('Product/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
 
 					//Logout
-					echo '<a href="' . base_url("index.php/UserController/logout_user")  . '"><span>Logout</span></a>';
+					echo '<a href="' . base_url("index.php/User/logout_user")  . '"><span>Logout</span></a>';
 				}
 				//Admin
 				else if ($this->session->userdata('AdminNumber') != null) {
@@ -81,11 +81,11 @@ $base = base_url() . index_page();
 			<br>
 		</div>
 
-		<?= anchor('ProductController/index', 'Home', 'title="Home"'); ?>
+		<?= anchor('Product/index', 'Home', 'title="Home"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('ProductController/handleInsert', 'Insert', 'title="Insert"'); ?>
+		<?= anchor('Product/handleInsert', 'Insert', 'title="Insert"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('ProductController/listproducts/', 'List', 'title="List"'); ?>
+		<?= anchor('Product/listproducts/', 'List', 'title="List"'); ?>
 		&nbsp;&nbsp;&nbsp;
 
 	</header>
