@@ -21,87 +21,86 @@ class Orders extends CI_Controller
 	{
 		//load the index page
 		$this->load->view('index');
-	}
-	public function listproducts()
+}
+public function listorders()
 	{ //config options for pagination
 		$paginationConfig = array(
-			'base_url' => site_url('Product/listproducts/'),
-			'total_rows' => $this->ProductServices->getProductCount(),
+			'base_url' => site_url('Orders/listorders/'),
+			'total_rows' => $this->OrderRepository->getOrdersCount(),
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['product_info'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
-		$this->load->view('productListView', $data);
+		$data['order_info'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
+		$this->load->view('orderListView', $data);
 	}
  
-	public function editproduct($productId)
+	public function editorder($Id)
 	{
-		$data = array("product" => $this->ProductServices->getProductById($productId));
-		$this->load->view('updateproductView', $data);
+		$data = array("order" => $this->OrderRepository->getOrdersById($Id));
+		$this->load->view('updateorderView', $data);
 	}
 
-	public function viewproduct($productId)
+	public function vieworder($Id)
 	{
-		$data = array('product' => $this->ProductServices->getProductById($productId));
-		$this->load->view('productView', $data);
+		$data = array('order' => $this->OrderRepository->getOrdersById($Id));
+		$this->load->view('orderView', $data);
 	}
 
-	public function deleteproduct($productId)
+	public function deleteorder($Id)
 	{
-		$deletedRows = $this->ProductServices->deleteProductById($productId);
+		$deletedRows = $this->OrderRepository->deleteOrdersById($Id);
 		if ($deletedRows > 0)
-			$data['message'] = "$deletedRows product has been deleted";
+			$data['message'] = "$deletedRows order has been deleted";
 		else
-			$data['message'] = "There was an error deleting the product with an ID of $productId";
+			$data['message'] = "There was an error deleting the order with an ID of $Id";
 		$this->load->view('displayMessageView', $data);
 	}
 
-	public function updateproduct($productId)
+	public function updateorder($Id)
 	{
 		$pathToFile = $this->uploadAndResizeFile();
 		$this->createThumbnail($pathToFile);
 
 		//set validation rules
-		$this->form_validation->set_rules('Id', 'Product Code', 'required');
-		$this->form_validation->set_rules('Description', 'Description', 'required');
-		$this->form_validation->set_rules('Category', 'Category', 'required');
-		$this->form_validation->set_rules('Artist', 'Artist', 'required');
-		$this->form_validation->set_rules('QtyInStock', 'Product in stock', 'required');
-		$this->form_validation->set_rules('BuyCost', 'Cost', 'required');
-		$this->form_validation->set_rules('SalePrice', 'Sale Price', 'required');
-		$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
+		$this->form_validation->set_rules('Id', 'Id', 'required');
+		$this->form_validation->set_rules('OrderDate', 'OrderDate', 'required');
+		$this->form_validation->set_rules('RequiredDate', 'RequiredDate', 'required');
+		$this->form_validation->set_rules('ShippedDate', 'ShippedDate', 'required');
+		$this->form_validation->set_rules('Status', 'Status', 'required');
+		$this->form_validation->set_rules('Comments', 'Comments', 'required');
+		$this->form_validation->set_rules('CustomerNumber', 'CustomerNumber', 'required');
+	
+	
 
-		$product = array(
+		$order = array(
 			"Id" => $this->input->post('Id'),
-			"Description" => $this->input->post('Description'),
-			"Category" => $this->input->post('Category'),
-			"Artist" => $this->input->post('Artist'),
-			"QtyInStock" => $this->input->post('QtyInStock'),
-			"BuyCost" => $this->input->post('BuyCost'),
-			"SalePrice" => $this->input->post('SalePrice'),
-			"priceAlreadyDiscounted" => $this->input->post('priceAlreadyDiscounted'),
-			"Photo" => $_FILES['userfile']['name']
+			"OrderDate" => $this->input->post('OrderDate'),
+			"RequiredDate" => $this->input->post('RequiredDate'),
+			"ShippedDate" => $this->input->post('ShippedDate'),
+			"Status" => $this->input->post('Status'),
+		"Comments" => $this->input->post('Comments'),
+			"CustomerNumber" => $this->input->post('CustomerNumber')
 		);
 
-		var_dump($product);
+		var_dump($order);
 
 
 		//check if the form has passed validation
 		if (!$this->form_validation->run()) {
 			//validation has failed, load the form again
-			$this->load->view('updateproductView', array("product" => $product));
+			$this->load->view('updateorderView', array("order" => $order));
 			return;
 		}
 
 
-		$productUpdated = $this->ProductServices->updateProduct($product);
+		$orderUpdated = $this->OrderRepository->updateOrders($order);
 		//check if update is successful
-		if ($productUpdated) {
-			redirect('Product/listproducts');
+		if ($orderUpdated) {
+			redirect('Orders/listorders');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
-			$data['product'] = $product;
-			$this->load->view('updateproductView', $data);
+			$data['order'] = $order;
+			$this->load->view('updateorderView', $data);
 		}
 	}
 
@@ -163,37 +162,36 @@ class Orders extends CI_Controller
 			$this->createThumbnail($pathToFile);
 
 			//set validation rules
-			$this->form_validation->set_rules('Id', 'Product Code', 'required');
-			$this->form_validation->set_rules('Description', 'Description', 'required');
-			$this->form_validation->set_rules('Category', 'Category', 'required');
-			$this->form_validation->set_rules('Artist', 'Artist', 'required');
-			$this->form_validation->set_rules('QtyInStock', 'Product in stock', 'required');
-			$this->form_validation->set_rules('BuyCost', 'Cost', 'required');
-			$this->form_validation->set_rules('SalePrice', 'Sale Price', 'required');
-			$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
+			$this->form_validation->set_rules('Id', 'Orders Code', 'required');
+			$this->form_validation->set_rules('OrderDate', 'OrderDate', 'required');
+			$this->form_validation->set_rules('RequiredDate', 'RequiredDate', 'required');
+			$this->form_validation->set_rules('ShippedDate', 'ShippedDate', 'required');
+			$this->form_validation->set_rules('Status', 'Status', 'required');
+			$this->form_validation->set_rules('Comments', 'Comments', 'required');
+			$this->form_validation->set_rules('CustomerNumber', 'CustomerNumber', 'required');
+	
 
 			//get values from post
-			$product['Id'] = $this->input->post('Id');
-			$product['Description'] = $this->input->post('Description');
-			$product['Category'] = $this->input->post('Category');
-			$product['Artist'] = $this->input->post('Artist');
-			$product['QtyInStock'] = $this->input->post('QtyInStock');
-			$product['BuyCost'] = $this->input->post('BuyCost');
-			$product['SalePrice'] = $this->input->post('SalePrice');
-			$product['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
-			$product['Photo'] = $_FILES['userfile']['name'];
+			$order['Id'] = $this->input->post('Id');
+			$order['OrderDate'] = $this->input->post('OrderDate');
+			$order['RequiredDate'] = $this->input->post('RequiredDate');
+			$order['ShippedDate'] = $this->input->post('ShippedDate');
+			$order['Status'] = $this->input->post('Status');
+			$order['Status'] = $this->input->post('Comments');
+			$order['Status'] = $this->input->post('CustomerNumber');
+	
 
 			//check if the form has passed validation
 			if (!$this->form_validation->run()) {
 				//validation has failed, load the form again – keeping all the data in place
 				//and pass the appropriate validation error messages via the 
 				//form_validation library
-				$this->load->view('insertproductView', $product);
+				$this->load->view('insertorderView', $order);
 				return;
 			}
 
 			//check if insert is successful
-			if ($this->ProductServices->addProduct($product)) {
+			if ($this->OrderRepository->addOrders($order)) {
 				$data['message'] = "The insert has been successful";
 			} else {
 				$data['message'] = "Uh oh ... problem on insert";
@@ -206,18 +204,19 @@ class Orders extends CI_Controller
 
 		//the user has not submitted the form
 		//initialize the form fields
-		$product['Id'] = "";
-		$product['Description'] = "";
-		$product['Category'] = "";
-		$product['Artist'] = "";
-		$product['QtyInStock'] = "";
-		$product['BuyCost'] = "";
-		$product['SalePrice'] = "";
-		$product['priceAlreadyDiscounted'] = "";
+		$order['Id'] = "";
+		$order['OrderDate'] = "";
+		$order['RequiredDate'] = "";
+		$order['ShippedDate'] = "";
+		$order['Status'] = "";
+		$order['Comments'] = "";
+		$order['CustomerNumber'] = "";
+		
+	
 
 		//load the form
-		$this->load->view('insertproductView', $product);
+		$this->load->view('insertorderView', $order);
 	}
 
 
-}
+	}
