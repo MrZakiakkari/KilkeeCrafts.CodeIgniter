@@ -19,17 +19,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th align="left" width="100">Photo</th>
 		</tr>
 
-		<?php foreach($artist as $artist){?>
+		<?php foreach($artists as $artist){?>
 		<tr>
-			<td><?php echo $row->Id;?></td>
-			<td><?php echo $row->BusinessName;?></td>
-			<td><?php echo $row->Address;?></td>
-			<td><?php echo $row->Contact;?></td>
-			<td><?php echo $row->Phone;?></td>
-			<td><img src="<?php echo $img_base.'thumbs/'.$row->Photo;?>"></td>
-			<td><?php echo anchor('Artists/viewartist/'.$row->Id,'View');?></td>
-			<td><?php echo anchor('Artists/editartist/'.$row->Id,'Update');?></td>
-			<td><?php echo anchor('Artists/deleteartist/'.$row->Id,
+			<td><?php echo $artist->Id;?></td>
+			<td><?php echo $artist->BusinessName;?></td>
+			<td><?php echo $artist->Address;?></td>
+			<td><?php echo $artist->Contact;?></td>
+			<td><?php echo $artist->Phone;?></td>
+			<td><img src="<?php echo $img_base.'thumbs/'.$artist->Photo;?>"></td>
+			<td><?php echo anchor('Artists/viewartist/'.$artist->Id,'View');?></td>
+			<td><?php echo anchor('Artists/editartist/'.$artist->Id,'Update');?></td>
+			<td><?php echo anchor('Artists/deleteartist/'.$artist->Id,
 				'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  

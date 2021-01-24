@@ -26,23 +26,23 @@ public function listartists()
 	{ //config options for pagination
 		$paginationConfig = array(
 			'base_url' => site_url('Artists/listartists/'),
-			'total_rows' => $this->ArtistRepository->getArtistsCount(),
+			'total_rows' => $this->ArtistRepository->getArtistCount(),
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['artist'] = $this->ArtistRepository->getArtistsRange(2, $this->uri->segment(3));
+		$data['artists'] = $this->ArtistRepository->getArtists();//(2, $this->uri->segment(3));
 		$this->load->view('artistListView', $data);
 	}
  
 	public function editartist($Id)
 	{
-		$data = array("artist" => $this->ArtistRepository->getArtistsById($Id));
+		$data = array("artist" => $this->ArtistRepository->getArtistById($Id));
 		$this->load->view('updateartistView', $data);
 	}
 
 	public function viewartist($Id)
 	{
-		$data = array('artist' => $this->ArtistRepository->getArtistsById($Id));
+		$data = array('artist' => $this->ArtistRepository->getArtistById($Id));
 		$this->load->view('artistView', $data);
 	}
 

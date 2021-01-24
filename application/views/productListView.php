@@ -22,20 +22,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th align="left" width="100">Photo</th>
 		</tr>
 
-		<?php foreach($product_info as $row){?>
+		<?php foreach($products as $product){?>
 		<tr>
-			<td><?php echo $row->Id;?></td>
-			<td><?php echo $row->Description;?></td>
-			<td><?php echo $row->Category;?></td>
-			<td><?php echo $row->Artist;?></td>
-			<td><?php echo $row->QtyInStock;?></td>
-			<td><?php echo $row->BuyCost;?></td>
-			<td><?php echo $row->SalePrice;?></td>
-			<td><?php echo $row->priceAlreadyDiscounted;?></td>
-			<td><img src="<?php echo $img_base.'thumbs/'.$row->Photo;?>"></td>
-			<td><?php echo anchor('Product/viewproduct/'.$row->Id,'View');?></td>
-			<td><?php echo anchor('Product/editproduct/'.$row->Id,'Update');?></td>
-			<td><?php echo anchor('Product/deleteproduct/'.$row->Id,
+			<td><?php echo $product->Id;?></td>
+			<td><?php echo $product->Description;?></td>
+			<td><?php echo $product->Category;?></td>
+			<td><?php echo $product->Artist;?></td>
+			<td><?php echo $product->QtyInStock;?></td>
+			<td><?php echo $product->BuyCost;?></td>
+			<td><?php echo $product->SalePrice;?></td>
+			<td><?php echo $product->priceAlreadyDiscounted;?></td>
+			<td><img src="<?php echo $img_base.'thumbs/'.$product->Photo;?>"></td>
+			<td><?php echo anchor('Products/viewproduct/'.$product->Id,'View');?></td>
+			<td><?php echo anchor('Products/editproduct/'.$product->Id,'Update');?></td>
+			<td><?php echo anchor('Products/deleteproduct/'.$product->Id,
 				'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  
