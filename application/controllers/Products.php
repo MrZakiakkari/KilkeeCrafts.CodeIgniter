@@ -23,11 +23,6 @@ class Products extends CI_Controller
 		$this->load->view('index');
 	}
 
-	//hello
-	/* public function listproducts() 
-	  {	$data['product_info']=$this->ProductServices->get_all_products();
-	  $this->load->view('productListView',$data);
-	  } */
 	public function listproducts()
 	{ //config options for pagination
 		$paginationConfig = array(
@@ -220,6 +215,29 @@ class Products extends CI_Controller
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
+	public function handleAddToCart($productId)
+	{
+		$this->load->library('cart');
+		$cartItem = $this->getCartItemFromProductId($productId);
+		$this->cart->insert($cartItem);
+		$this->load->view('ShoppingCartView');
+	}
+	private function getCartItemFromProductId($productId)
+	{
+		$product  = $this->ProductServices->getProductById($productId);
+		return $this->createCartItem($product->Id, 1, $product->SalePrice, $product->Description);
+	}
+	private function createCartItem($id, $quantity, $price, $name, $options = NULL)
+	{
+		return array(
+			'id'      => $id,
+			'qty'     => $quantity,
+			'price'   => $price,
+			'name'    => $name,
+			'options' => $options
+		);
+	}
+
 	public function SearchProducts()
 	{
 

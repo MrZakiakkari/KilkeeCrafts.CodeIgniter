@@ -20,6 +20,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th align="left" width="100">SalePrice</th>
 			<th align="left" width="100">priceAlreadyDiscounted</th>
 			<th align="left" width="100">Photo</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
 		</tr>
 
 		<?php foreach($products as $product){?>
@@ -33,6 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td><?php echo $product->SalePrice;?></td>
 			<td><?php echo $product->priceAlreadyDiscounted;?></td>
 			<td><img src="<?php echo $img_base.'thumbs/'.$product->Photo;?>"></td>
+			<td><?php echo anchor('Products/handleAddToCart/'.$product->Id,'Add to cart');?></td>
 			<td><?php echo anchor('Products/viewproduct/'.$product->Id,'View');?></td>
 			<td><?php echo anchor('Products/editproduct/'.$product->Id,'Update');?></td>
 			<td><?php echo anchor('Products/deleteproduct/'.$product->Id,
