@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th align="left" width="100">Photo</th>
 		</tr>
 
-		<?php foreach($product_info as $row){?>
+		<?php foreach($artist as $artist){?>
 		<tr>
 			<td><?php echo $row->Id;?></td>
 			<td><?php echo $row->BusinessName;?></td>

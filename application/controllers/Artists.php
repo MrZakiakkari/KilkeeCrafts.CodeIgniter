@@ -30,7 +30,7 @@ public function listartists()
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['artist_info'] = $this->ArtistRepository->getArtistsRange(2, $this->uri->segment(3));
+		$data['artist'] = $this->ArtistRepository->getArtistsRange(2, $this->uri->segment(3));
 		$this->load->view('artistListView', $data);
 	}
  

@@ -11,22 +11,22 @@ echo form_open();
 echo '</br></br>';
 
 echo 'Product Code : ';
-echo form_input('Id', $product->Id, 'readonly');
+echo form_input('Id', $artist->Id, 'readonly');
 
 echo '</br></br>BusinessName : ';
-echo form_input('BusinessName', $product->BusinessName, 'readonly');
+echo form_input('BusinessName', $artist->BusinessName, 'readonly');
 
 echo '</br></br>Address : ';
-echo form_input('Address', $product->Address, 'readonly');
+echo form_input('Address', $artist->Address, 'readonly');
 
 echo '</br></br>Contact : ';
-echo form_input('Contact', $product->Contact, 'readonly');
+echo form_input('Contact', $artist->Contact, 'readonly');
 
 echo '</br></br>Phone : ';
-echo form_input('Phone', $product->Phone, 'readonly');
+echo form_input('Phone', $artist->Phone, 'readonly');
 
 echo '</br></br>';
-echo '<img src=' . $img_base . 'full/' . $product->Photo . '>';
+echo '<img src=' . $img_base . 'full/' . $artist->Photo . '>';
 
 echo '</br></br>';
 echo form_close();

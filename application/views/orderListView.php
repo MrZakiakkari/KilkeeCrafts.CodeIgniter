@@ -21,18 +21,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		</tr>
 
-		<?php foreach($product_info as $row){?>
+		<?php foreach($order as $order){?>
 		<tr>
-			<td><?php echo $row->Id;?></td>
-			<td><?php echo $row->OrderDate;?></td>
-			<td><?php echo $row->RequiredDate;?></td>
-			<td><?php echo $row->ShippedDate;?></td>
-			<td><?php echo $row->Status;?></td>
-			<td><?php echo $row->Comments;?></td>
-			<td><?php echo $row->CustomerNumber;?></td>
-			<td><?php echo anchor('Orders/vieworder/'.$row->Id,'View');?></td>
-			<td><?php echo anchor('Orders/editorder/'.$row->Id,'Update');?></td>
-			<td><?php echo anchor('Orders/deleteorder/'.$row->Id,
+			<td><?php echo $order->Id;?></td>
+			<td><?php echo $order->OrderDate;?></td>
+			<td><?php echo $order->RequiredDate;?></td>
+			<td><?php echo $order->ShippedDate;?></td>
+			<td><?php echo $order->Status;?></td>
+			<td><?php echo $order->Comments;?></td>
+			<td><?php echo $order->CustomerNumber;?></td>
+			<td><?php echo anchor('Orders/vieworder/'.$order->Id,'View');?></td>
+			<td><?php echo anchor('Orders/editorder/'.$order->Id,'Update');?></td>
+			<td><?php echo anchor('Orders/deleteorder/'.$order->Id,
 				'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  

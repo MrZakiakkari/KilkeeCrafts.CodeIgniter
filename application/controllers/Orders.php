@@ -30,7 +30,7 @@ public function listorders()
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['order_info'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
+		$data['order'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
 		$this->load->view('orderListView', $data);
 	}
  
