@@ -31,7 +31,7 @@ class User extends CI_Controller
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
         }
-        redirect("Product/index");
+        redirect("Products/index");
     }
 
     
@@ -55,7 +55,7 @@ class User extends CI_Controller
     {
         $this->session->sess_destroy();
 
-        redirect("Product/index");
+        redirect("Products/index");
     }
 
     public function createAccount()

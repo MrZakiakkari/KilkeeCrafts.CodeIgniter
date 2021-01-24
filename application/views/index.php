@@ -15,7 +15,7 @@ $img_base = base_url() . "assets/images/";
 		<div class="panel-body">
 			<?php
 			echo '<div id="search">';
-			echo form_open('Product/SearchProducts');
+			echo form_open('Products/SearchProducts');
 			echo form_input(array('id' => 'search_box', 'name' => 'searchInput', 'type' => 'text', 'placeholder' => '   Search..', 'required' => 'required'));
 			echo form_submit(array('id' => 'search_btn', 'name' => 'searchButton', 'value' => 'Search'));
 			//$this->input->post('search');

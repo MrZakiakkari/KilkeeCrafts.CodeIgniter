@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-class Product extends CI_Controller
+class Products extends CI_Controller
 {
 
 	public function __construct()
@@ -31,15 +31,15 @@ class Product extends CI_Controller
 	public function listproducts()
 	{ //config options for pagination
 		$paginationConfig = array(
-			'base_url' => site_url('Product/listproducts/'),
+			'base_url' => site_url('Products/listproducts/'),
 			'total_rows' => $this->ProductServices->getProductCount(),
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['product_info'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
+		$data['products'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
- 
+
 	public function editproduct($productId)
 	{
 		$data = array("product" => $this->ProductServices->getProductById($productId));
@@ -61,7 +61,6 @@ class Product extends CI_Controller
 			$data['message'] = "There was an error deleting the product with an ID of $productId";
 		$this->load->view('displayMessageView', $data);
 	}
-
 	public function updateproduct($productId)
 	{
 		$pathToFile = $this->uploadAndResizeFile();
@@ -103,14 +102,13 @@ class Product extends CI_Controller
 		$productUpdated = $this->ProductServices->updateProduct($product);
 		//check if update is successful
 		if ($productUpdated) {
-			redirect('Product/listproducts');
+			redirect('Products/listproducts');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
 			$data['product'] = $product;
 			$this->load->view('updateproductView', $data);
 		}
 	}
-
 	function uploadAndResizeFile()
 	{ //set config options for thumbnail creation 
 		$config['upload_path'] = './assets/images/products/full/';
@@ -141,7 +139,6 @@ class Product extends CI_Controller
 		$this->image_lib->clear();
 		return $path;
 	}
-
 	function createThumbnail($path)
 	{ //set config options for thumbnail creation 
 		$config['source_image'] = $path;
@@ -159,7 +156,6 @@ class Product extends CI_Controller
 		else
 			echo 'thumbnail created<br>';
 	}
-
 	public function handleInsert()
 	{
 		//if the user has submitted the form
@@ -224,33 +220,14 @@ class Product extends CI_Controller
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
-
-
-   
 	public function SearchProducts()
 	{
-				
+
 		$search = $this->input->post('searchInput');
-		$config['base_url']=site_url('index.php/Product/SearchProducts');
-		$data['product_info']=$this->ProductServices->getProductsMatchingDescription($search );
-		
-		
+		$config['base_url'] = site_url('index.php/Products/SearchProducts');
+		$data['product_info'] = $this->ProductServices->getProductsMatchingDescription($search);
+
+
 		$this->load->view('ProductViews/SearchView', $data);
-			
 	}
-	
-
-	
-	
-
-
-   
-
-
- 
-    
-
-   
-   
-	
 }

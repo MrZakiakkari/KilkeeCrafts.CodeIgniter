@@ -23,11 +23,11 @@ class Kilkeekrafts extends CI_Controller {
             if($this->session->userdata('email') )
 			{
 				//the user is already logged in -> display the index page with secret content
-				redirect('Product');
+				redirect('Products');
             }
             if(isset($_COOKIE['Cookie_Email']))
 			{
-                 redirect('Product');
+                 redirect('Products');
              }
               
             

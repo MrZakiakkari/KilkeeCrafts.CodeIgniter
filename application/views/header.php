@@ -49,9 +49,9 @@ $base = base_url() . index_page();
 				if ($this->session->userdata('CustomerNumber') != null) {
 
 
-					echo '<a href="' . base_url('Product/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('Product/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('Product/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
+					echo '<a href="' . base_url('Products/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('Products/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('Products/listproducts/', 'Products', 'title="Products"')  . '"><span>Products</span></a>';
 
 					//Logout
 					echo '<a href="' . base_url("index.php/User/logout_user")  . '"><span>Logout</span></a>';
@@ -60,9 +60,9 @@ $base = base_url() . index_page();
 				else if ($this->session->userdata('AdminNumber') != null) {
 					//Control Panel
 					echo '<a href="' . base_url("index.php/Admin/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
-					echo '<a href="' . base_url('Product/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('Product/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('Product/listproducts/', 'List', 'title="List"')  . '"><span>List</span></a>';
+					echo '<a href="' . base_url('Products/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
+					echo '<a href="' . base_url('Products/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
+					echo '<a href="' . base_url('Products/listproducts/', 'Products', 'title="Products"')  . '"><span>Products</span></a>';
 					//Admin logout
 					echo '<a href="' . base_url("index.php/Admin/logout_user")  . '"><span>Logout</span></a>';
 					//echo '<div id="'
@@ -81,11 +81,17 @@ $base = base_url() . index_page();
 			<br>
 		</div>
 
-		<?= anchor('Product/index', 'Home', 'title="Home"'); ?>
+		<?= anchor('Products/index', 'Product Search', 'title="Product Search"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Product/handleInsert', 'Insert', 'title="Insert"'); ?>
+		<?= anchor('Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Product/listproducts/', 'List', 'title="List"'); ?>
+		<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
+		&nbsp;&nbsp;&nbsp;
+		<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
+		&nbsp;&nbsp;&nbsp;
+		<?= anchor('Artists/handleInsert', 'Insert Artist', 'title="Insert"'); ?>
+		&nbsp;&nbsp;&nbsp;
+		<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 		&nbsp;&nbsp;&nbsp;
 
 	</header>
