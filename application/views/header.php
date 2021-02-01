@@ -93,11 +93,11 @@ $base = base_url() . index_page();
 		&nbsp;&nbsp;&nbsp;
 		<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Wishlist/index', 'Wishlist Search', 'title="Wishlist Search"'); ?>
+		<?= anchor('WishItems/index', 'Wishlist Search', 'title="Wishlist Search"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Wishlist/handleInsert', 'Insert Wishlist', 'title="Insert"'); ?>
+		<?= anchor('WishItems/handleInsert', 'Insert Wishlist', 'title="Insert"'); ?>
 		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Wishlist/listwishlist/', 'Wishlist', 'title="Wishlist"'); ?>
+		<?= anchor('WishItems/listwishlist/', 'Wishlist', 'title="Wishlist"'); ?>
 		&nbsp;&nbsp;&nbsp;
 
 	</header>

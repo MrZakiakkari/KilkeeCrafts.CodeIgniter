@@ -19,6 +19,11 @@ class ShoppingCart extends CI_Controller
 
 	public function index()
 	{
+		
+			$this->load->library('cart');
 		$this->load->view('ShoppingCartView');
+	}
+	public function CheckOut(){
+		
 	}
 }

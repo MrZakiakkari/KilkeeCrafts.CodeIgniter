@@ -8,7 +8,7 @@ $img_base = base_url() . "/assets/images/products/";
 <br>
 <h1 class="main">Update Wishlist</h1>
 <?php
-echo form_open_multipart('Wishlist/updatewishlist/' . $artist->CustomerId);
+echo form_open_multipart('WishItems/updatewishitem/' . $artist->CustomerId);
 echo '</br></br>';
 
 echo 'Customer Id : ';

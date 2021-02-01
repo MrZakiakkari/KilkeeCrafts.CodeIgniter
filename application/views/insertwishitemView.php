@@ -5,7 +5,7 @@
 	$img_base = base_url()."/assets/images/products/";
 ?>
 
-<?php echo form_open_multipart('Wishlist/handleInsert');
+<?php echo form_open_multipart('WishItems/handleInsert');
 
 	echo 'Enter CustomerId :';
 	echo form_input('CustomerId', $CustomerId);
