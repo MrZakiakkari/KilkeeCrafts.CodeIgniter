@@ -31,14 +31,18 @@ class Products extends CI_Controller
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);
-		$data['products'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
-		$this->load->view('productListView', $data);
+		$vars = array(
+			'products' => $this->ProductServices->getProductRange(2, $this->uri->segment(3))
+		);
+		$this->load->view('productListView', $vars);
 	}
 	public function search()
 	{
 		$criteria = $_GET['search'];
-		$data['product_info'] = $this->ProductServices->search($criteria);
-		$this->load->view('index', $data);
+		$vars = array(
+			'products' => $this->ProductServices->search($criteria)
+		);
+		$this->load->view('productListView', $vars);
 	}
 	public function editproduct($productId)
 	{
@@ -159,17 +163,14 @@ class Products extends CI_Controller
 	public function handleSessionSecurity()
 	{
 		redirect("user/unauthorized");
-
 	}
 	public function unauthorizedSessionDetected()
 	{
 		return $this->session->userdata('AdminId') == null;
-	
 	}
 	public function handleInsert()
 	{
-		if($this->unauthorizedSessionDetected())
-		{
+		if ($this->unauthorizedSessionDetected()) {
 			return $this->handleSessionSecurity();
 		}
 
@@ -235,5 +236,4 @@ class Products extends CI_Controller
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
-
 }
