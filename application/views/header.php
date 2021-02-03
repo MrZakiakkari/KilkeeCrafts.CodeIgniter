@@ -31,73 +31,72 @@ $base = base_url() . index_page();
 					echo "Please login ";
 				}
 				echo '<div id="search">';
-
-
 				?>
+			</form>
 		</div>
-		</form>
-
-		</div>
-
-
 		<div class="col-3">
 			<!-- Login -->
-
 			<div class="ShoppingBasket">
 				<?php
-
-				if ($this->session->userdata('CustomerNumber') != null) {
-
-
-					echo '<a href="' . base_url('Products/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('Products/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('Products/listproducts/', 'Products', 'title="Products"')  . '"><span>Products</span></a>';
-
-					//Logout
-					echo '<a href="' . base_url("index.php/User/logout_user")  . '"><span>Logout</span></a>';
-				}
-				//Admin
-				else if ($this->session->userdata('AdminNumber') != null) {
-					//Control Panel
-					echo '<a href="' . base_url("index.php/Admin/controlPanel") . '"><span>' . $this->session->userdata('AdminName') . '</span></a>';
-					echo '<a href="' . base_url('Products/index', 'Home', 'title="Home"')  . '"><span>Home</span></a>';
-					echo '<a href="' . base_url('Products/handleInsert', 'Insert', 'title="Insert"')  . '"><span>Inser</span></a>';
-					echo '<a href="' . base_url('Products/listproducts/', 'Products', 'title="Products"')  . '"><span>Products</span></a>';
-					//Admin logout
-					echo '<a href="' . base_url("index.php/Admin/logout_user")  . '"><span>Logout</span></a>';
-					//echo '<div id="'
-				} else {
-					//Login
-					echo '<div id="header_login">';
-					echo '<a href="' . base_url() . "index.php/User/login" . '">Login<a><br>';
-					echo '<a href="' . base_url() . "index.php/Admin/login" . '">Admin</a><br>';
-					echo '<a href="' . base_url() . "index.php/User/register" . '">Register</a><br>';
-
-					echo '</div>';
-				}
-
+				if ($this->session->userdata('CustomerId') != null) { ?>
+					<?= anchor('Products/', 'Product Search', 'title="Product Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/', 'Artist Search', 'title="Artist Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('WishItems/', 'Wishlist', 'title="Wishlist"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('ShoppingCart/', 'Cart', 'title="Shopping Cart"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('User/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('User/logout_user/', 'Logout', 'title="Logout"'); ?>
+				<?Php } else if ($this->session->userdata('AdminId') != null) { ?>
+					<?= anchor('Products/index', 'Product Search', 'title="Product Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/handleInsert', 'Insert Artist', 'title="Insert"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Admin/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Admin/logout_user/', 'Logout', 'title="Logout"'); ?>
+					&nbsp;&nbsp;&nbsp;
+				<?php } else { ?>
+					<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Products/index', 'Product Search', 'title="Product Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('ShoppingCart/', 'Cart', 'title="Shopping Cart"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('User/login/', 'Login', 'title="Login"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Admin/login/', 'Admin', 'title="Admin Login"'); ?>
+					&nbsp;&nbsp;&nbsp;
+					<?= anchor('User/register/', 'Register', 'title="Register"'); ?>
+					&nbsp;&nbsp;&nbsp;
+				<?php }
 				?>
 			</div>
 			<br>
 		</div>
-
-		<?= anchor('Products/index', 'Product Search', 'title="Product Search"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Artists/handleInsert', 'Insert Artist', 'title="Insert"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('WishItems/index', 'Wishlist Search', 'title="Wishlist Search"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('WishItems/handleInsert', 'Insert Wishlist', 'title="Insert"'); ?>
-		&nbsp;&nbsp;&nbsp;
-		<?= anchor('WishItems/listwishlist/', 'Wishlist', 'title="Wishlist"'); ?>
-		&nbsp;&nbsp;&nbsp;
-
 	</header>

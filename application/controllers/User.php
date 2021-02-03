@@ -27,11 +27,12 @@ class User extends CI_Controller
             $sessiondata = array('CustomerId' => $user->Number, 'email' => $email, 'username' => $user->FirstName, "type" => "customer");
 
             $this->session->set_userdata($sessiondata);
+            redirect("Products/index");
          
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
+            redirect("user/error");//TODO: fix
         }
-        redirect("Products/index");
     }
 
     
