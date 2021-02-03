@@ -21,7 +21,7 @@ class WishItemRepository extends CI_Model
 	{
 
 		$this->db->select("CustomerId, ProductId");
-		$this->db->from('wishitem');
+		$this->db->from($this->table);
 		$this->db->where('CustomerId', $CustomerId);
 
 		$query = $this->db->get();
@@ -29,20 +29,28 @@ class WishItemRepository extends CI_Model
 	}
 	function deleteWishItemByKey($CustomerId, $ProductId)
 	{
-		$this->db->where('CustomerId', $CustomerId);//todo fix to add productid
+		$this->db->where('CustomerId', $CustomerId); //todo check
+		$this->db->where('ProductId', $ProductId);
 		return $this->db->delete($this->table);
 	}
 	function getWishItemCount()
 	{
 		return $this->db->count_all('wishitem');
 	}
-	
-	
+	function getWishItemByKey($CustomerId, $ProductId)
+	{
+		$this->db->from($this->table);
+		$this->db->where('CustomerId', $CustomerId);
+		$this->db->where('ProductId', $ProductId);
+
+		$query = $this->db->get();
+		return $query->num_rows() == 0 ? null : $query->result()[0];
+	}
+
 	function getWishItems()
 	{
 		$this->db->from('wishitem');
 		$query = $this->db->get();
 		return $query->result();
 	}
-	
 }

@@ -15,6 +15,34 @@ class WishItems extends CI_Controller
 		$this->load->library('pagination');
 	}
 
+	public function add($productId)
+	{
+		$customerId = $this->session->userdata("CustomerId");
+
+		$wishitem = $this->WishItemRepository->getWishItemByKey($customerId, $productId);
+
+		if($wishitem!=null)
+		{
+			//TODO Alert Already exists
+			redirect('WishItems/');
+		}
+
+		$wishItemValuesArray = array(
+			"CustomerId" => $customerId,
+			"ProductId" => $productId,
+		);
+
+
+		$wishitemIsAdded = $this->WishItemRepository->addWishItem($wishItemValuesArray);
+
+		if ($wishitemIsAdded) {
+			redirect('WishItems/');
+		} else {
+			//TODO : Check and refactor
+			$data['message'] = "Uh oh ... problem on update";
+			$this->load->view('updatewishitemView', $data);
+		}
+	}
 	public function index()
 	{
 		$paginationConfig = array(
@@ -22,7 +50,7 @@ class WishItems extends CI_Controller
 			'total_rows' => $this->WishItemRepository->getWishItemCount(),
 			'per_page' => 2
 		);
-		$customerId = "1"; //TODO: Get from session
+		$customerId = $this->session->userdata("CustomerId");
 		$this->pagination->initialize($paginationConfig);
 		//(2, $this->uri->segment(3));
 
