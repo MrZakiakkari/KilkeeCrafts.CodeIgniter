@@ -15,14 +15,26 @@ class WishItems extends CI_Controller
 		$this->load->library('pagination');
 	}
 
+	public function handleUnauthorizedAccess()
+	{
+		redirect("user/login");
+	}
+	public function unauthorizedSessionDetected()
+	{
+		return $this->session->userdata('CustomerId') == null;
+	}
 	public function add($productId)
 	{
+		if ($this->unauthorizedSessionDetected()) {
+			return $this->handleUnauthorizedAccess();
+		}
+
+
 		$customerId = $this->session->userdata("CustomerId");
 
 		$wishitem = $this->WishItemRepository->getWishItemByKey($customerId, $productId);
 
-		if($wishitem!=null)
-		{
+		if ($wishitem != null) {
 			//TODO Alert Already exists
 			redirect('WishItems/');
 		}
@@ -80,146 +92,5 @@ class WishItems extends CI_Controller
 		else
 			$data['message'] = "There was an error deleting the wishitem with an ID of $CustomerId";
 		$this->load->view('displayMessageView', $data);
-	}
-
-	public function updatewishitem($CustomerId)
-	{
-		$pathToFile = $this->uploadAndResizeFile();
-		$this->createThumbnail($pathToFile);
-
-		//set validation rules
-		$this->form_validation->set_rules('CustomerId', 'CustomerId', 'required');
-		$this->form_validation->set_rules('ProductId', 'ProductId', 'required');
-
-
-
-
-		$wishitem = array(
-			"CustomerId" => $this->input->post('CustomerId'),
-			"ProductId" => $this->input->post('ProductId'),
-
-
-		);
-
-		var_dump($wishitem);
-
-
-		//check if the form has passed validation
-		if (!$this->form_validation->run()) {
-			//validation has failed, load the form again
-			$this->load->view('updatewishitemView', array("wishitem" => $wishitem));
-			return;
-		}
-
-
-		$wishitemUpdated = $this->WishItemRepository->updateWishlist($wishitem);
-		//check if update is successful
-		if ($wishitemUpdated) {
-			redirect('WishItems/listwishitem');
-		} else {
-			$data['message'] = "Uh oh ... problem on update";
-			$data['wishitem'] = $wishitem;
-			$this->load->view('updatewishitemView', $data);
-		}
-	}
-
-	function uploadAndResizeFile()
-	{ //set config options for thumbnail creation 
-		$config['upload_path'] = './assets/images/artists/full/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = '100';
-		$config['max_width'] = '1024';
-		$config['max_height'] = '768';
-
-		$this->load->library('upload', $config);
-		if (!$this->upload->do_upload())
-			echo $this->upload->display_errors();
-		else
-			echo 'upload done<br>';
-
-		$upload_data = $this->upload->data();
-		$path = $upload_data['full_path'];
-
-		$config['source_image'] = $path;
-		$config['maintain_ratio'] = 'FALSE';
-		$config['width'] = '180';
-		$config['height'] = '200';
-
-		$this->load->library('image_lib', $config);
-		if (!$this->image_lib->resize())
-			echo $this->image_lib->display_errors();
-		else
-			echo 'image resized<br>';
-		$this->image_lib->clear();
-		return $path;
-	}
-
-	function createThumbnail($path)
-	{ //set config options for thumbnail creation 
-		$config['source_image'] = $path;
-		$config['new_image'] = './assets/images/products/thumbs/';
-		$config['maintain_ratio'] = 'FALSE';
-		$config['width'] = '42';
-		$config['height'] = '42';
-
-		//load library to do the resizing and thumbnail creation 
-		$this->image_lib->initialize($config);
-
-		//call function resize in the image library to physiclly create the thumbnail 
-		if (!$this->image_lib->resize())
-			echo $this->image_lib->display_errors();
-		else
-			echo 'thumbnail created<br>';
-	}
-
-	public function handleInsert()
-	{
-		//if the user has submitted the form
-		if ($this->input->post('submitInsert')) {
-
-			$pathToFile = $this->uploadAndResizeFile();
-			$this->createThumbnail($pathToFile);
-
-			//set validation rules
-			$this->form_validation->set_rules('CustomerId', 'CustomerId', 'required');
-			$this->form_validation->set_rules('ProductId', 'ProductId', 'required');
-
-
-
-			//get values from post
-			$wishitem['CustomerId'] = $this->input->post('CustomerId');
-			$wishitem['ProductId'] = $this->input->post('ProductId');
-
-
-			//check if the form has passed validation
-			if (!$this->form_validation->run()) {
-				//validation has failed, load the form again – keeping all the data in place
-				//and pass the appropriate validation error messages via the 
-				//form_validation library
-				$this->load->view('insertwishitemView', $wishitem);
-				return;
-			}
-
-			//check if insert is successful
-			if ($this->WishItemRepository->addWishlist($wishitem)) {
-				$data['message'] = "The insert has been successful";
-			} else {
-				$data['message'] = "Uh oh ... problem on insert";
-			}
-
-			//load the view to display the message
-			$this->load->view('displayMessageView', $data);
-			return;
-		}
-
-		//the user has not submitted the form
-		//initialize the form fields
-		$wishitem['CustomerId'] = "";
-		$wishitem['ProductId'] = "";
-
-
-
-		//load the form
-		$this->load->view('insertwishitemView', $wishitem);
 	}
 }
