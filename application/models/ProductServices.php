@@ -27,6 +27,14 @@ class ProductServices extends CI_Model
 		$query = $this->db->get();
 		return $query->result()[0];
 	}
+	function search($criteria) {
+			$this->db->select("Id,Description,Category,Artist,QtyInStock,BuyCost,SalePrice,Photo,priceAlreadyDiscounted"); 
+			$this->db->from('product');
+			$this->db->like('Description', $criteria);
+			$this->db->or_like('Category', $criteria);
+			$query = $this->db->get();
+			return $query->result();
+		}
 	function deleteProductById($ProductId)
 	{
 		$this->db->where('Id', $ProductId);

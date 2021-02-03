@@ -13,15 +13,10 @@ $img_base = base_url() . "assets/images/";
 	<div class="panel ">
 		<br>
 		<div class="panel-body">
-			<?php
-			echo '<div id="search">';
-			echo form_open('Products/SearchProducts');
-			echo form_input(array('id' => 'search_box', 'name' => 'searchInput', 'type' => 'text', 'placeholder' => '   Search..', 'required' => 'required'));
-			echo form_submit(array('id' => 'search_btn', 'name' => 'searchButton', 'value' => 'Search'));
-			//$this->input->post('search');
-			echo form_close();
-			echo '</div><br>';
-			?>
+			<form action="<?php echo base_url()?>index.php/Products/search">
+		<input id="search" name="search" placeholder="Search">
+		<button type="submit">Search</button>
+	</form>
 		</div>
 	</div>
 	<?php $this->load->view('footer'); ?>

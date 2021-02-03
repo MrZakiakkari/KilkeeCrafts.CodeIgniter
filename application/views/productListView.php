@@ -6,6 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$img_base = base_url()."assets/images/products/";
 ?>
 <div class="list">
+	<form action="<?php echo base_url()?>index.php/Products/search">
+		<input id="search" name="search" placeholder="Search">
+		<button type="submit">Search</button>
+	</form>
 	<br><br>
 	<h1 class="main">List of products</h1>
 	<br><br>
@@ -37,7 +41,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td><?php echo $product->SalePrice;?></td>
 			<td><?php echo $product->priceAlreadyDiscounted;?></td>
 			<td><img src="<?php echo $img_base.'thumbs/'.$product->Photo;?>"></td>
-			<td><?php echo anchor('Products/handleAddToCart/'.$product->Id,'Add to cart');?></td>
+			<td><?php echo anchor('ShoppingCart/handleAddToCart/'.$product->Id,'Add to cart');?></td>
+			<td><?php echo anchor('WishItems/add/'.$product->Id,'Add to wish list');?></td>
 			<td><?php echo anchor('Products/viewproduct/'.$product->Id,'View');?></td>
 			<td><?php echo anchor('Products/editproduct/'.$product->Id,'Update');?></td>
 			<td><?php echo anchor('Products/deleteproduct/'.$product->Id,
