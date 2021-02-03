@@ -34,7 +34,12 @@ class Products extends CI_Controller
 		$data['products'] = $this->ProductServices->getProductRange(2, $this->uri->segment(3));
 		$this->load->view('productListView', $data);
 	}
-
+	public function search()
+	{
+		$criteria = $_GET['search'];
+		$data['product_info'] = $this->ProductServices->search($criteria);
+		$this->load->view('index', $data);
+	}
 	public function editproduct($productId)
 	{
 		$data = array("product" => $this->ProductServices->getProductById($productId));
@@ -151,8 +156,23 @@ class Products extends CI_Controller
 		else
 			echo 'thumbnail created<br>';
 	}
+	public function handleSessionSecurity()
+	{
+		redirect("user/unauthorized");
+
+	}
+	public function unauthorizedSessionDetected()
+	{
+		return $this->session->userdata('AdminId') == null;
+	
+	}
 	public function handleInsert()
 	{
+		if($this->unauthorizedSessionDetected())
+		{
+			return $this->handleSessionSecurity();
+		}
+
 		//if the user has submitted the form
 		if ($this->input->post('submitInsert')) {
 
@@ -215,37 +235,5 @@ class Products extends CI_Controller
 		//load the form
 		$this->load->view('insertproductView', $product);
 	}
-	public function handleAddToCart($productId)
-	{
-		$this->load->library('cart');
-		$cartItem = $this->getCartItemFromProductId($productId);
-		$this->cart->insert($cartItem);
-		$this->load->view('ShoppingCartView');
-	}
-	private function getCartItemFromProductId($productId)
-	{
-		$product  = $this->ProductServices->getProductById($productId);
-		return $this->createCartItem($product->Id, 1, $product->SalePrice, $product->Description);
-	}
-	private function createCartItem($id, $quantity, $price, $name, $options = NULL)
-	{
-		return array(
-			'id'      => $id,
-			'qty'     => $quantity,
-			'price'   => $price,
-			'name'    => $name,
-			'options' => $options
-		);
-	}
 
-	public function SearchProducts()
-	{
-
-		$search = $this->input->post('searchInput');
-		$config['base_url'] = site_url('index.php/Products/SearchProducts');
-		$data['product_info'] = $this->ProductServices->getProductsMatchingDescription($search);
-
-
-		$this->load->view('ProductViews/SearchView', $data);
-	}
 }
