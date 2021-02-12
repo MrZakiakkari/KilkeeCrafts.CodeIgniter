@@ -26,7 +26,7 @@ public function listorders()
 	{ //config options for pagination
 		$paginationConfig = array(
 			'base_url' => site_url('Orders/listorders/'),
-			'total_rows' => $this->OrderRepository->getOrdersCount(),
+			'total_rows' => $this->OrderRepository->getOrderCount(),
 			'per_page' => 2
 		);
 		$this->pagination->initialize($paginationConfig);

@@ -70,6 +70,8 @@ $base = base_url() . index_page();
 					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Orders/listorders/', 'Orders', 'title="Orders"'); ?>
+					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('Admin/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
 					&nbsp;&nbsp;&nbsp;
