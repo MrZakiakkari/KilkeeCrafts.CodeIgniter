@@ -31,6 +31,7 @@ class Orders extends CI_Controller
 			return;
 		} else if ($this->sessionIsCustomer()) {
 			$vars['order'] = $this->OrderRepository->getOrdersByCustomerNumber($this->getSessionCustomerId());
+			//echo sizeof($this->OrderRepository->getOrdersByCustomerNumber($this->getSessionCustomerId()));
 			$this->load->view('orderListView', $vars);
 		} else {
 			$paginationConfig = array(

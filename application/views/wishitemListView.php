@@ -21,10 +21,12 @@ $img_base = base_url() . "assets/images/products/";
 				<td><?php echo $wishlist->CustomerId; ?></td>
 				<td><?php echo $wishlist->ProductId; ?></td>
 				<td><?php echo anchor(
-						'Wishlist/deletewishlist/' . $wishlist->CustomerId,
+						'Wishlist/deletewishitem/' . $wishlist->CustomerId,
 						'Delete',
 						'onclick="return checkDelete()"'
-					); ?></td>
+					); ?>
+                    <td><?php echo anchor('Products/viewproduct/' . $wishlist->ProductId, 'View', 'class="btn btn-primary"'); ?></td>
+                    <td><?php echo anchor('Wishlist/addProductToCart/' . $wishlist->ProductId, 'Add to Cart', 'class="btn btn-success"'); ?></td></td>
 			</tr>
 		<?php } ?>
 	</table>

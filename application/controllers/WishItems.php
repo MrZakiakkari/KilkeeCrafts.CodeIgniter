@@ -93,4 +93,26 @@ class WishItems extends CI_Controller
 			$data['message'] = "There was an error deleting the wishitem with an ID of $CustomerId";
 		$this->load->view('displayMessageView', $data);
 	}
+	public function addProductToCart($productId)
+    {
+        $this->load->library('cart');
+        $cartItem = $this->getCartItemFromProductId($productId);
+        $this->cart->insert($cartItem);
+		$this->load->view("CartView", "Cart", "Cart");
+    }
+    private function getCartItemFromProductId($productId)
+    {
+        $product  = $this->ProductService->getProductById($productId);
+        return $this->createCartItem($product->Id, 1, $product->SalePrice, $product->Description);
+    }
+    private function createCartItem($id, $quantity, $price, $name, $options = NULL)
+    {
+        return array(
+            'id'      => $id,
+            'qty'     => $quantity,
+            'price'   => $price,
+            'name'    => $name,
+            'options' => $options
+        );
+    }
 }
