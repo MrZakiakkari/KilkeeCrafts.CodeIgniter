@@ -21,29 +21,47 @@ class Orders extends CI_Controller
 	{
 		//load the index page
 		$this->load->view('index');
-}
-public function listorders()
-	{ //config options for pagination
-		$paginationConfig = array(
-			'base_url' => site_url('Orders/listorders/'),
-			'total_rows' => $this->OrderRepository->getOrderCount(),
-			'per_page' => 2
-		);
-		$this->pagination->initialize($paginationConfig);
-		$data['order'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
-		$this->load->view('orderListView', $data);
 	}
- 
+
+	public function listorders()
+	{ //config options for pagination
+
+		if ($this->unauthorizedSessionDetected()) {
+			$this->handleUnauthorizedSession();
+			return;
+		} else if ($this->sessionIsCustomer()) {
+			$vars['order'] = $this->OrderRepository->getOrdersByCustomerNumber($this->getSessionCustomerId());
+			$this->load->view('orderListView', $vars);
+		} else {
+			$paginationConfig = array(
+				'base_url' => site_url('Orders/listorders/'),
+				'total_rows' => $this->OrderRepository->getOrderCount(),
+				'per_page' => 2
+			);
+			$this->pagination->initialize($paginationConfig);
+			$data['order'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
+			$this->load->view('orderListView', $data);
+		}
+	}
+
 	public function editorder($Id)
 	{
 		$data = array("order" => $this->OrderRepository->getOrdersById($Id));
 		$this->load->view('updateorderView', $data);
 	}
 
-	public function vieworder($Id)
+	public function vieworder($orderId)
 	{
-		$data = array('order' => $this->OrderRepository->getOrdersById($Id));
-		$this->load->view('orderView', $data);
+		$order = $this->OrderRepository->getOrdersById($orderId);
+		if ($this->unauthorizedSessionDetected()) {
+			$this->handleUnauthorizedSession();
+			return;
+		} else if ($this->sessionIsCustomer() && $order->CustomerNumber != $this->getSessionCustomerId()) {
+			$this->handleUnauthorizedSession();
+			return;
+		}
+		$vars = array('order' => $this->OrderRepository->getOrdersById($orderId));
+		$this->load->view('orderView', $vars);
 	}
 
 	public function deleteorder($Id)
@@ -69,8 +87,8 @@ public function listorders()
 		$this->form_validation->set_rules('Status', 'Status', 'required');
 		$this->form_validation->set_rules('Comments', 'Comments', 'required');
 		$this->form_validation->set_rules('CustomerNumber', 'CustomerNumber', 'required');
-	
-	
+
+
 
 		$order = array(
 			"Id" => $this->input->post('Id'),
@@ -78,7 +96,7 @@ public function listorders()
 			"RequiredDate" => $this->input->post('RequiredDate'),
 			"ShippedDate" => $this->input->post('ShippedDate'),
 			"Status" => $this->input->post('Status'),
-		"Comments" => $this->input->post('Comments'),
+			"Comments" => $this->input->post('Comments'),
 			"CustomerNumber" => $this->input->post('CustomerNumber')
 		);
 
@@ -169,7 +187,7 @@ public function listorders()
 			$this->form_validation->set_rules('Status', 'Status', 'required');
 			$this->form_validation->set_rules('Comments', 'Comments', 'required');
 			$this->form_validation->set_rules('CustomerNumber', 'CustomerNumber', 'required');
-	
+
 
 			//get values from post
 			$order['Id'] = $this->input->post('Id');
@@ -179,7 +197,7 @@ public function listorders()
 			$order['Status'] = $this->input->post('Status');
 			$order['Status'] = $this->input->post('Comments');
 			$order['Status'] = $this->input->post('CustomerNumber');
-	
+
 
 			//check if the form has passed validation
 			if (!$this->form_validation->run()) {
@@ -211,12 +229,35 @@ public function listorders()
 		$order['Status'] = "";
 		$order['Comments'] = "";
 		$order['CustomerNumber'] = "";
-		
-	
+
+
 
 		//load the form
 		$this->load->view('insertorderView', $order);
 	}
-
-
+	private function handleUnauthorizedSession()
+	{
+		$this->load->view("403.php");
 	}
+	private function unauthorizedSessionDetected()
+	{
+		return $this->unauthorizedAdminSessionDetected() && $this->unauthorizedCustomerSessionDetected();
+	}
+
+	private function unauthorizedAdminSessionDetected()
+	{
+		return $this->session->userdata("AdminId") == null;
+	}
+	private function unauthorizedCustomerSessionDetected()
+	{
+		return $this->session->userdata("CustomerId") == null;
+	}
+	private function getSessionCustomerId()
+	{
+		return $this->session->userdata("CustomerId");
+	}
+	private function sessionIsCustomer()
+	{
+		return $this->session->userdata("CustomerId") !== null;
+	}
+}

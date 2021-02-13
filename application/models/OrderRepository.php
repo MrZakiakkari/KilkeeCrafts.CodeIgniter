@@ -17,6 +17,7 @@ class OrderRepository extends CI_Model
 		return $this->db->affected_rows() == 1;
 	}
 
+	
 	function getOrdersById($Id)
 	{
 
@@ -26,6 +27,16 @@ class OrderRepository extends CI_Model
 
 		$query = $this->db->get();
 		return $query->result()[0];
+	}
+	function getOrdersByCustomerNumber($customerNumber)
+	{
+
+		$this->db->select("Id, OrderDate, RequiredDate, ShippedDate, Status, Comments, CustomerNumber");
+		$this->db->from('order');
+		$this->db->where('CustomerNumber', $customerNumber);
+
+		$query = $this->db->get();
+		return $query->result();
 	}
 	function deleteOrdersById($OrderId)
 	{
@@ -43,6 +54,17 @@ class OrderRepository extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	function getOrdersByCustomerNumberRange($customerNumber, $limit, $offset)
+	{
+		$this->db->limit($limit, $offset);
+		$this->db->from('order');
+		$this->db->where('CustomerNumber', $customerNumber);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+
 	function getOrdersRange($limit, $offset)
 	{
 		$this->db->limit($limit, $offset);
