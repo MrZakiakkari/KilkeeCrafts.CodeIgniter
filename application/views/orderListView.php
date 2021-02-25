@@ -18,7 +18,7 @@
 		
 		</tr>
 
-		<?php foreach($order as $order){?>
+		<?php foreach($orders as $order){?>
 		<tr>
 			<td><?php echo $order->Id;?></td>
 			<td><?php echo $order->OrderDate;?></td>

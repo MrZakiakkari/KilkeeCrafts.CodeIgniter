@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		</tr>
 
-		<?php foreach($order as $order){?>
+		<?php foreach($orders as $order){?>
 		<tr>
 			<td><?php echo $order->Id;?></td>
 			<td><?php echo $order->OrderDate;?></td>
@@ -30,9 +30,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td><?php echo $order->Status;?></td>
 			<td><?php echo $order->Comments;?></td>
 			<td><?php echo $order->CustomerNumber;?></td>
-			<td><?php echo anchor('Orders/vieworder/'.$order->Id,'View');?></td>
-			<td><?php echo anchor('Orders/editorder/'.$order->Id,'Update');?></td>
-			<td><?php echo anchor('Orders/deleteorder/'.$order->Id,
+			<td><?php echo anchor('admin/Orders/vieworder/'.$order->Id,'View');?></td>
+			<td><?php echo anchor('admin/Orders/editorder/'.$order->Id,'Update');?></td>
+			<td><?php echo anchor('admin/Orders/deleteorder/'.$order->Id,
 				'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  

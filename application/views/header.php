@@ -51,7 +51,7 @@ $base = base_url() . index_page();
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('ShoppingCart/', 'Cart', 'title="Shopping Cart"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Orders/listorders/', 'Orders', 'title="Orders"'); ?>
+					<?= anchor('Orders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					<?= '<span>' . $this->session->userdata('username') . '</span>'; ?>
@@ -71,7 +71,7 @@ $base = base_url() . index_page();
 					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('admin/Orders/listorders/', 'Orders', 'title="Orders"'); ?>
+					<?= anchor('admin/Orders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					<?= '<span>' . $this->session->userdata('username') . '</span>'; ?>
