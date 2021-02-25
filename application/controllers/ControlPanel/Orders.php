@@ -35,13 +35,13 @@ class Orders extends CI_Controller
 			$this->load->view('orderListView', $vars);
 		} else {
 			$paginationConfig = array(
-				'base_url' => site_url('Admin/Orders/listorders/'),
+				'base_url' => site_url('Orders/listorders/'),
 				'total_rows' => $this->OrderRepository->getOrderCount(),
 				'per_page' => 2
-			);
+			); // for admin to view orders for all customers
 			$this->pagination->initialize($paginationConfig);
 			$data['order'] = $this->OrderRepository->getOrdersRange(2, $this->uri->segment(3));
-			$this->load->view('Admin/orderListView', $data);
+			$this->load->view('orderListView', $data);
 		}
 	}
 
