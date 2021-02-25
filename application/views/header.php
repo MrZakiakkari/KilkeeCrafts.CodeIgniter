@@ -51,17 +51,18 @@ $base = base_url() . index_page();
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('ShoppingCart/', 'Cart', 'title="Shopping Cart"'); ?>
 					&nbsp;&nbsp;&nbsp;
+					<?= anchor('Orders/listorders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('User/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('User/logout_user/', 'Logout', 'title="Logout"'); ?>
 				<?Php } else if ($this->session->userdata('AdminId') != null) { ?>
-					<?= anchor('Products/index', 'Product Search', 'title="Product Search"'); ?>
+					<?= anchor('controlpanel/Products/index', 'Product Search', 'title="Product Search"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
+					<?= anchor('controlpanel/Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
+					<?= anchor('controlpanel/Products/listproducts/', 'Products', 'title="Products"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
 					&nbsp;&nbsp;&nbsp;
@@ -70,7 +71,7 @@ $base = base_url() . index_page();
 					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Orders/listorders/', 'Orders', 'title="Orders"'); ?>
+					<?= anchor('controlpanel/Orders/listorders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('Admin/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
@@ -85,8 +86,6 @@ $base = base_url() . index_page();
 					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
-					&nbsp;&nbsp;&nbsp;
-					<?= anchor('ShoppingCart/', 'Cart', 'title="Shopping Cart"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;

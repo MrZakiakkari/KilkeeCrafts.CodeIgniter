@@ -22,7 +22,7 @@ class Products extends CI_Controller
 	}
 	public function listproducts()
 	{
-		if ($this->unauthorizedAdminSessionDetected()) {
+		if ($this->unauthorizedCustomerSessionDetected()) {
 			return $this->handleUnauthorizedSession();
 		}
 		$paginationConfig = array(
@@ -44,11 +44,6 @@ class Products extends CI_Controller
 		);
 		$this->load->view('productListView', $vars);
 	}
-	public function editproduct($productId)
-	{
-		$data = array("product" => $this->ProductServices->getProductById($productId));
-		$this->load->view('updateproductView', $data);
-	}
 
 	public function viewproduct($productId)
 	{
@@ -56,63 +51,6 @@ class Products extends CI_Controller
 		$this->load->view('productView', $data);
 	}
 
-	public function deleteproduct($productId)
-	{
-		$deletedRows = $this->ProductServices->deleteProductById($productId);
-		if ($deletedRows > 0)
-			$data['message'] = "$deletedRows product has been deleted";
-		else
-			$data['message'] = "There was an error deleting the product with an ID of $productId";
-		$this->load->view('displayMessageView', $data);
-	}
-	public function updateproduct($productId)
-	{
-		$pathToFile = $this->uploadAndResizeFile();
-		$this->createThumbnail($pathToFile);
-
-		//set validation rules
-		$this->form_validation->set_rules('Id', 'Product Code', 'required');
-		$this->form_validation->set_rules('Description', 'Description', 'required');
-		$this->form_validation->set_rules('Category', 'Category', 'required');
-		$this->form_validation->set_rules('Artist', 'Artist', 'required');
-		$this->form_validation->set_rules('QtyInStock', 'Product in stock', 'required');
-		$this->form_validation->set_rules('BuyCost', 'Cost', 'required');
-		$this->form_validation->set_rules('SalePrice', 'Sale Price', 'required');
-		$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
-
-		$product = array(
-			"Id" => $this->input->post('Id'),
-			"Description" => $this->input->post('Description'),
-			"Category" => $this->input->post('Category'),
-			"Artist" => $this->input->post('Artist'),
-			"QtyInStock" => $this->input->post('QtyInStock'),
-			"BuyCost" => $this->input->post('BuyCost'),
-			"SalePrice" => $this->input->post('SalePrice'),
-			"priceAlreadyDiscounted" => $this->input->post('priceAlreadyDiscounted'),
-			"Photo" => $_FILES['userfile']['name']
-		);
-
-		var_dump($product);
-
-
-		//check if the form has passed validation
-		if (!$this->form_validation->run()) {
-			//validation has failed, load the form again
-			$this->load->view('updateproductView', array("product" => $product));
-			return;
-		}
-
-
-		$productUpdated = $this->ProductServices->updateProduct($product);
-		//check if update is successful
-		if ($productUpdated) {
-			redirect('Products/listproducts');
-		} else {
-			$data['message'] = "Uh oh ... problem on update";
-			$data['product'] = $product;
-			$this->load->view('updateproductView', $data);
-		}
-	}
 	private  function uploadAndResizeFile()
 	{ //set config options for thumbnail creation 
 		$config['upload_path'] = './assets/images/products/full/';
@@ -160,84 +98,12 @@ class Products extends CI_Controller
 		else
 			echo 'thumbnail created<br>';
 	}
-	public function handleInsert()
-	{
-		if ($this->unauthorizedAdminSessionDetected()) {
-			$this->handleUnauthorizedSession();
-		} else {
-			//if the user has submitted the form
-			if ($this->input->post('submitInsert')) {
-
-				$pathToFile = $this->uploadAndResizeFile();
-				$this->createThumbnail($pathToFile);
-
-				//set validation rules
-				$this->form_validation->set_rules('Id', 'Product Code', 'required');
-				$this->form_validation->set_rules('Description', 'Description', 'required');
-				$this->form_validation->set_rules('Category', 'Category', 'required');
-				$this->form_validation->set_rules('Artist', 'Artist', 'required');
-				$this->form_validation->set_rules('QtyInStock', 'Product in stock', 'required');
-				$this->form_validation->set_rules('BuyCost', 'Cost', 'required');
-				$this->form_validation->set_rules('SalePrice', 'Sale Price', 'required');
-				$this->form_validation->set_rules('priceAlreadyDiscounted', 'Discount', 'required');
-
-				//get values from post
-				$product['Id'] = $this->input->post('Id');
-				$product['Description'] = $this->input->post('Description');
-				$product['Category'] = $this->input->post('Category');
-				$product['Artist'] = $this->input->post('Artist');
-				$product['QtyInStock'] = $this->input->post('QtyInStock');
-				$product['BuyCost'] = $this->input->post('BuyCost');
-				$product['SalePrice'] = $this->input->post('SalePrice');
-				$product['priceAlreadyDiscounted'] = $this->input->post('priceAlreadyDiscounted');
-				$product['Photo'] = $_FILES['userfile']['name'];
-
-				//check if the form has passed validation
-				if (!$this->form_validation->run()) {
-					//validation has failed, load the form again – keeping all the data in place
-					//and pass the appropriate validation error messages via the 
-					//form_validation library
-					$this->load->view('insertproductView', $product);
-					return;
-				}
-
-				//check if insert is successful
-				if ($this->ProductServices->addProduct($product)) {
-					$data['message'] = "The insert has been successful";
-				} else {
-					$data['message'] = "Uh oh ... problem on insert";
-				}
-
-				//load the view to display the message
-				$this->load->view('displayMessageView', $data);
-				return;
-			}
-
-			//the user has not submitted the form
-			//initialize the form fields
-			$product['Id'] = "";
-			$product['Description'] = "";
-			$product['Category'] = "";
-			$product['Artist'] = "";
-			$product['QtyInStock'] = "";
-			$product['BuyCost'] = "";
-			$product['SalePrice'] = "";
-			$product['priceAlreadyDiscounted'] = "";
-
-			//load the form
-			$this->load->view('insertproductView', $product);
-		}
-	}
 	//
 	//security functions
 	//
 	private function handleUnauthorizedSession()
 	{
 		$this->load->view("403.php");
-	}
-	private function unauthorizedAdminSessionDetected()
-	{
-		return $this->session->userdata("AdminId") == null;
 	}
 	private function unauthorizedCustomerSessionDetected()
 	{
