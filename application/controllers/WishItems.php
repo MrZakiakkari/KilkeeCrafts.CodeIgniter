@@ -8,6 +8,7 @@ class WishItems extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('WishItemRepository');
+		$this->load->model('ProductServices');
 		$this->load->helper('form');
 		$this->load->helper('html');
 		$this->load->helper('url');
@@ -84,9 +85,9 @@ class WishItems extends CI_Controller
 		$this->load->view('wishitemView', $data);
 	}
 
-	public function deletewishitem($CustomerId)
+	public function deletewishitem($CustomerId, $ProductId)
 	{
-		$deletedRows = $this->WishItemRepository->deleteWishItemByKey($CustomerId);
+		$deletedRows = $this->WishItemRepository->deleteWishItemByKey($CustomerId, $ProductId);
 		if ($deletedRows > 0)
 			$data['message'] = "$deletedRows wishitem has been deleted";
 		else
@@ -98,11 +99,11 @@ class WishItems extends CI_Controller
         $this->load->library('cart');
         $cartItem = $this->getCartItemFromProductId($productId);
         $this->cart->insert($cartItem);
-		$this->load->view("CartView", "Cart", "Cart");
+		$this->load->view("ShoppingCartView", "Cart", "Cart");
     }
     private function getCartItemFromProductId($productId)
     {
-        $product  = $this->ProductService->getProductById($productId);
+        $product  = $this->ProductServices->getProductById($productId);
         return $this->createCartItem($product->Id, 1, $product->SalePrice, $product->Description);
     }
     private function createCartItem($id, $quantity, $price, $name, $options = NULL)

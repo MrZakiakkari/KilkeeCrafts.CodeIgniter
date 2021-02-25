@@ -16,17 +16,17 @@ $img_base = base_url() . "assets/images/products/";
 			<td>&nbsp;</td>
 		</tr>
 
-		<?php foreach ($wishItems as $wishlist) { ?>
+		<?php foreach ($wishItems as $wishitem) { ?>
 			<tr>
-				<td><?php echo $wishlist->CustomerId; ?></td>
-				<td><?php echo $wishlist->ProductId; ?></td>
+				<td><?php echo $wishitem->CustomerId; ?></td>
+				<td><?php echo $wishitem->ProductId; ?></td>
 				<td><?php echo anchor(
-						'Wishlist/deletewishitem/' . $wishlist->CustomerId,
+						'WishItems/deletewishitem/' . $wishitem->CustomerId.'/'. $wishitem->ProductId,
 						'Delete',
 						'onclick="return checkDelete()"'
 					); ?>
-                    <td><?php echo anchor('Products/viewproduct/' . $wishlist->ProductId, 'View', 'class="btn btn-primary"'); ?></td>
-                    <td><?php echo anchor('Wishlist/addProductToCart/' . $wishlist->ProductId, 'Add to Cart', 'class="btn btn-success"'); ?></td></td>
+                    <td><?php echo anchor('Products/viewproduct/' . $wishitem->ProductId, 'View', 'class="btn btn-primary"'); ?></td>
+                    <td><?php echo anchor('WishItems/addProductToCart/' . $wishitem->ProductId, 'Add to Cart', 'class="btn btn-success"'); ?></td></td>
 			</tr>
 		<?php } ?>
 	</table>
