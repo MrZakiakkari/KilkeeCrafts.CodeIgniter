@@ -106,7 +106,7 @@ class Products extends CI_Controller
 		$productUpdated = $this->ProductServices->updateProduct($product);
 		//check if update is successful
 		if ($productUpdated) {
-			redirect('controlpanel/Products/listproducts');
+			redirect('admin/Products/listproducts');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
 			$data['product'] = $product;

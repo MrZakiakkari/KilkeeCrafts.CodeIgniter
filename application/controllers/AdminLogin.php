@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller
+class AdminLogin extends CI_Controller
 {
     public function __construct()
     {
@@ -31,12 +31,11 @@ class Admin extends CI_Controller
         } else {
             $this->session->set_flashdata('login_failed', 'Invalid username or password!');
         }
-        redirect("Products/index");
+        redirect("admin/Products/index");
     }
 
     public function index()
     {
-        
         $this->load->view('AdminLogin');
     }
     public function login()

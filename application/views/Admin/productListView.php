@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$img_base = base_url()."assets/images/products/";
 ?>
 <div class="list">
-	<form action="<?php echo base_url()?>index.php/controlpanel/Products/search">
+	<form action="<?php echo base_url()?>index.php/admin/Products/search">
 		<input id="search" name="search" placeholder="Search">
 		<button type="submit">Search</button>
 	</form>
@@ -40,9 +40,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td><?php echo $product->SalePrice;?></td>
 			<td><?php echo $product->priceAlreadyDiscounted;?></td>
 			<td><img src="<?php echo $img_base.'thumbs/'.$product->Photo;?>"></td>
-			<td><?php echo anchor('controlpanel/Products/viewproduct/'.$product->Id,'View');?></td>
-			<td><?php echo anchor('controlpanel/Products/editproduct/'.$product->Id,'Update');?></td>
-			<td><?php echo anchor('controlpanel/Products/deleteproduct/'.$product->Id, 'Delete', 'onclick="return checkDelete()"');?></td>
+			<td><?php echo anchor('admin/Products/viewproduct/'.$product->Id,'View');?></td>
+			<td><?php echo anchor('admin/Products/editproduct/'.$product->Id,'Update');?></td>
+			<td><?php echo anchor('admin/Products/deleteproduct/'.$product->Id, 'Delete', 'onclick="return checkDelete()"');?></td>
 		</tr>     
 		<?php }?>  
    </table>

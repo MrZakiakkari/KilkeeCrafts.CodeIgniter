@@ -8,7 +8,7 @@ $img_base = base_url() . "/assets/images/products/";
 <br>
 <h1 class="main">Update Product</h1>
 <?php
-echo form_open_multipart('controlpanel/Products/updateproduct/' . $product->Id);
+echo form_open_multipart('admin/Products/updateproduct/' . $product->Id);
 echo '</br></br>';
 
 echo 'Product Code : ';

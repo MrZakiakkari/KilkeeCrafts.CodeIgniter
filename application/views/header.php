@@ -54,15 +54,15 @@ $base = base_url() . index_page();
 					<?= anchor('Orders/listorders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('User/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
+					<?= '<span>' . $this->session->userdata('username') . '</span>'; ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('User/logout_user/', 'Logout', 'title="Logout"'); ?>
 				<?Php } else if ($this->session->userdata('AdminId') != null) { ?>
-					<?= anchor('controlpanel/Products/index', 'Product Search', 'title="Product Search"'); ?>
+					<?= anchor('admin/Products/index', 'Product Search', 'title="Product Search"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('controlpanel/Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
+					<?= anchor('admin/Products/handleInsert', 'Insert Product', 'title="Insert"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('controlpanel/Products/listproducts/', 'Products', 'title="Products"'); ?>
+					<?= anchor('admin/Products/listproducts/', 'Products', 'title="Products"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('Artists/index', 'Artist Search', 'title="Artist Search"'); ?>
 					&nbsp;&nbsp;&nbsp;
@@ -71,12 +71,12 @@ $base = base_url() . index_page();
 					<?= anchor('Artists/listartists/', 'Artists', 'title="Artists"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('controlpanel/Orders/listorders/', 'Orders', 'title="Orders"'); ?>
+					<?= anchor('admin/Orders/listorders/', 'Orders', 'title="Orders"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Admin/controlPanel/', '<span>' . $this->session->userdata('username') . '</span>', 'title="Control Panel"'); ?>
+					<?= '<span>' . $this->session->userdata('username') . '</span>'; ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Admin/logout_user/', 'Logout', 'title="Logout"'); ?>
+					<?= anchor('AdminLogin/logout_user/', 'Logout', 'title="Logout"'); ?>
 					&nbsp;&nbsp;&nbsp;
 				<?php } else { ?>
 					<?= anchor('Products/listproducts/', 'Products', 'title="Products"'); ?>
@@ -91,7 +91,7 @@ $base = base_url() . index_page();
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('User/login/', 'Login', 'title="Login"'); ?>
 					&nbsp;&nbsp;&nbsp;
-					<?= anchor('Admin/login/', 'Admin', 'title="Admin Login"'); ?>
+					<?= anchor('AdminLogin/login/', 'Admin', 'title="Admin Login"'); ?>
 					&nbsp;&nbsp;&nbsp;
 					<?= anchor('User/register/', 'Register', 'title="Register"'); ?>
 					&nbsp;&nbsp;&nbsp;

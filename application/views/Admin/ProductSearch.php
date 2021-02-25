@@ -13,7 +13,7 @@ $img_base = base_url() . "assets/images/";
 	<div class="panel ">
 		<br>
 		<div class="panel-body">
-			<form action="<?php echo base_url()?>index.php/controlpanel/Products/search">
+			<form action="<?php echo base_url()?>index.php/admin/Products/search">
 		<input id="search" name="search" placeholder="Search">
 		<button type="submit">Search</button>
 	</form>
