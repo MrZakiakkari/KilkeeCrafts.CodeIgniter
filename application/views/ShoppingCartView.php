@@ -10,7 +10,7 @@ $jsbase = base_url() . "assets/js/";
 
 <?php echo form_open($base . '/shoppingcart/update/'); ?>
 
-<table cellpadding="6" cellspacing="1" style="width:100%" border="0">
+<table cellpadding="6" cellspacing="1" style="width:100%;" >
 
 	<tr>
 		<th>QTY</th>
@@ -60,4 +60,10 @@ $jsbase = base_url() . "assets/js/";
 </table>
 
 <p><?php echo form_submit('', 'Update your Cart'); ?></p>
+<?php echo form_close(); ?>
+
+<?php echo form_open($base . '/shoppingcart/checkout/'); ?>
+<p><?php echo form_submit('', 'Checkout'); ?></p>
+<?php echo form_close(); ?>
+
 <?php $this->load->view('footer'); ?>

@@ -1,53 +1,49 @@
 <?php
-
-if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class ShoppingCart extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('ProductServices');
 		$this->load->helper('form');
 		$this->load->helper('html');
 		$this->load->helper('url');
+		$this->load->library('cart');
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
+		$this->load->model('OrderRepository');
+		$this->load->model('ProductServices');
 	}
-
 	public function index()
 	{
-
-		$this->load->library('cart');
 		$this->load->view('ShoppingCartView');
 	}
 	public function CheckOut()
-	{ {
-			$this->load->library('cart');
+	{
+		$orderValuesArray = array(
+			"CustomerNumber" => $this->session->userdata("CustomerId"),
+			"OrderDate" =>  date('Y-m-d'),
+		);
 
-			$orderValuesArray = array(
-				"CustomerNumber" => $this->session->userdata("CustomerId"),
-				"date" => now()
+		$orderId = $this->OrderRepository->addOrder($orderValuesArray);
+		foreach ($this->cart->contents() as $cartItem)
+		{
+			$orderItemValuesArray = array(
+				"OrderNumber" => $orderId,
+				"ProductCode" => $cartItem["id"],
+				"QuantityOrdered" => $cartItem["qty"],
+				"Price" => $cartItem["price"],
 			);
-
-			$order = $this->OrderRepository->addOrder($orderValuesArray);
-			foreach ($this->cart->contents() as $cartItem) {
-				$orderItemValuesArray = array(
-					"OrderNumber" => $order->OrderId,
-					"ProductID" => $cartItem->ProductId,
-					"Date" => now()
-				);
-				$this->OrderRepository->addOrderItem($orderItemValuesArray);
-			}
-
-			$this->cart->clear(); //Something like this
+			$this->OrderRepository->addOrderItem($orderItemValuesArray);
 		}
+
+		$this->cart->destroy();
+
+		redirect("Orders/viewOrder/". $orderId);
 	}
 	public function handleAddToCart($productId)
 	{
-		$this->load->library('cart');
 		$cartItem = $this->getCartItemFromProductId($productId);
 		$this->cart->insert($cartItem);
 		$this->load->view('ShoppingCartView');

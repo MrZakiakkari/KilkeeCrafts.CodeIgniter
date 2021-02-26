@@ -11,13 +11,21 @@ class OrderRepository extends CI_Model
 		$this->load->database();
 	}
 
-	function addOrder($orders)
+	function addOrder($orderValuesArray)
 	{
-		$this->db->insert($this->table, $orders);
-		return $this->db->affected_rows() == 1;
+		$this->db->insert($this->table, $orderValuesArray);
+		//return $this->db->affected_rows() == 1;
+		$insertId = $this->db->insert_id();
+		return  $insertId;
 	}
 
-	
+	function addOrderItem($orderItemValuesArray)
+	{
+		$this->db->insert("OrderItem", $orderItemValuesArray);
+		//return $this->db->affected_rows() == 1;
+		$insertId = $this->db->insert_id();
+		return  $insertId;
+	}
 	function getOrdersById($Id)
 	{
 

@@ -6,9 +6,9 @@ $base = base_url() . index_page();
 $img_base = base_url() . "/assets/images/products/";
 ?>
 <br>
-<h1 class="main">Update Artist</h1>
+<h1 class="main">Update Order</h1>
 <?php
-echo form_open_multipart('Artists/updateorder/' . $order->Id);
+echo form_open_multipart('admin/orders/updateorder/' . $order->Id);
 echo '</br></br>';
 
 echo 'Product Code : ';

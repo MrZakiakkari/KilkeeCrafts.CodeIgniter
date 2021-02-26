@@ -70,9 +70,6 @@ class Orders extends CI_Controller
 
 	public function updateorder($Id)
 	{
-		$pathToFile = $this->uploadAndResizeFile();
-		$this->createThumbnail($pathToFile);
-
 		//set validation rules
 		$this->form_validation->set_rules('Id', 'Id', 'required');
 		$this->form_validation->set_rules('OrderDate', 'OrderDate', 'required');
@@ -102,10 +99,10 @@ class Orders extends CI_Controller
 		}
 
 
-		$orderUpdated = $this->OrderRepository->updateOrders($order);
+		$orderUpdated = $this->OrderRepository->updateOrder($order);
 		//check if update is successful
 		if ($orderUpdated) {
-			redirect('Orders/listorders');
+			redirect('admin/Orders/');
 		} else {
 			$data['message'] = "Uh oh ... problem on update";
 			$data['order'] = $order;

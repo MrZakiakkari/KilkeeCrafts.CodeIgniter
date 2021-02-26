@@ -5,7 +5,7 @@
 	$img_base = base_url()."/assets/images/products/";
 ?>
 
-<?php echo form_open_multipart('Products/handleInsert');
+<?php echo form_open_multipart('admin/Products/handleInsert');
 
 	echo 'Enter Product Code :';
 	echo form_input('Id', $Id);
